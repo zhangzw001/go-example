@@ -1,0 +1,152 @@
+2020-06-02 10:37:14,259 INFO [com.boqii.report.web.ReportController] - decode content is  [
+  {
+    "address" : "北京市海淀区丹棱街靠近互联网金融中心",
+    "dm" : "iPhone 7 Plus",
+    "province" : "北京市",
+    "district" : "海淀区",
+    "events" : [
+      {
+        "event_name" : "START",
+        "val_req" : "BQIAppDelegate",
+        "type" : "action",
+        "pos_name" : "启动"
+      }
+    ],
+    "lng" : "116.313100",
+    "category" : "enter_view",
+    "city" : "北京市",
+    "tm" : 1591065434095,
+    "os" : "iPhone 7 Plus",
+    "ct" : "iPhone",
+    "act" : "view",
+    "udid" : "6109ae9d33129ea796be93efe99ab5c251b3671a",
+    "net" : "WiFi",
+    "uid" : 19240923,
+    "mno" : "中国移动",
+    "lat" : "39.979126",
+    "sc" : "414*736",
+    "app" : "4.5.4",
+    "idfa" : "ECD21C1E-2630-47BD-8CF5-315A88E0C056"
+  },
+  {
+    "address" : "北京市海淀区丹棱街靠近互联网金融中心",
+    "dm" : "iPhone 7 Plus",
+    "province" : "北京市",
+    "district" : "海淀区",
+    "events" : [
+      {
+        "pos_name" : "商城订单_待收货",
+        "val_next" : "MallOrderListViewController",
+        "val_req" : "IndexUserCenterViewController",
+        "type" : "action",
+        "event_name" : "SHOP_MY_ORDER_LOGISTIC_RECEIVED"
+      }
+    ],
+    "lng" : "116.313100",
+    "category" : "user_center",
+    "city" : "北京市",
+    "tm" : 1591062109961,
+    "udid" : "6109ae9d33129ea796be93efe99ab5c251b3671a",
+    "ct" : "iPhone",
+    "os" : "iPhone 7 Plus",
+    "act" : "click",
+    "net" : "WiFi",
+    "uid" : 19240923,
+    "mno" : "中国移动",
+    "lat" : "39.979126",
+    "sc" : "414*736",
+    "app" : "4.5.4",
+    "idfa" : "ECD21C1E-2630-47BD-8CF5-315A88E0C056"
+  },
+  {
+    "address" : "北京市海淀区丹棱街靠近互联网金融中心",
+    "dm" : "iPhone 7 Plus",
+    "province" : "北京市",
+    "district" : "海淀区",
+    "events" : [
+      {
+        "pos_name" : "商城订单_待收货",
+        "val_next" : "MallOrderListViewController",
+        "val_req" : "IndexUserCenterViewController",
+        "type" : "action",
+        "event_name" : "SHOP_MY_ORDER_LOGISTIC_RECEIVED"
+      }
+    ],
+    "lng" : "116.313100",
+    "category" : "user_center",
+    "city" : "北京市",
+    "tm" : 1591062109950,
+    "udid" : "6109ae9d33129ea796be93efe99ab5c251b3671a",
+    "ct" : "iPhone",
+    "os" : "iPhone 7 Plus",
+    "act" : "click",
+    "net" : "WiFi",
+    "uid" : 19240923,
+    "mno" : "中国移动",
+    "lat" : "39.979126",
+    "sc" : "414*736",
+    "app" : "4.5.4",
+    "idfa" : "ECD21C1E-2630-47BD-8CF5-315A88E0C056"
+  },
+  {
+    "udid" : "6109ae9d33129ea796be93efe99ab5c251b3671a",
+    "category" : "enter_view",
+    "uid" : 19240923,
+    "mno" : "中国移动",
+    "channel" : "sns",
+    "ct" : "iPhone",
+    "net" : "WiFi",
+    "idfa" : "ECD21C1E-2630-47BD-8CF5-315A88E0C056",
+    "os" : "iPhone 7 Plus",
+    "lat" : "39.979126",
+    "app" : "4.5.4",
+    "dm" : "iPhone 7 Plus",
+    "sc" : "414*736",
+    "tm" : 1591062103305,
+    "act" : "view",
+    "lng" : "116.313100",
+    "events" : [
+      {
+        "pos_name" : "启动",
+        "val_req" : "BQIAppDelegate",
+        "type" : "action",
+        "event_name" : "START"
+      }
+    ]
+  },
+  {
+    "udid" : "6109ae9d33129ea796be93efe99ab5c251b3671a",
+    "category" : "community",
+    "uid" : 19240923,
+    "mno" : "中国移动",
+    "channel" : "sns",
+    "ct" : "iPhone",
+    "net" : "WiFi",
+    "idfa" : "ECD21C1E-2630-47BD-8CF5-315A88E0C056",
+    "os" : "iPhone 7 Plus",
+    "lat" : "39.979126",
+    "app" : "4.5.4",
+    "dm" : "iPhone 7 Plus",
+    "sc" : "414*736",
+    "tm" : 1591062103141,
+    "act" : "view",
+    "lng" : "116.313100",
+    "events" : [
+      {
+        "type" : "action",
+        "event_name" : "COMMUNITY_ENTER",
+        "pos_name" : "社区首页-精选"
+      }
+    ]
+  }
+]
+2020-06-02 10:37:14,260 INFO [com.boqii.report.web.ReportController] - readTree is [{"address":"北京市海淀区丹棱街靠近互联网金融中心","dm":"iPhone 7 Plus","province":"北京市","district":"海淀区","events":[{"event_name":"START","val_req":"BQIAppDelegate","type":"action","pos_name":"启动"}],"lng":"116.313100","category":"enter_view","city":"北京市","tm":1591065434095,"os":"iPhone 7 Plus","ct":"iPhone","act":"view","udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","net":"WiFi","uid":19240923,"mno":"中国移动","lat":"39.979126","sc":"414*736","app":"4.5.4","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056"},{"address":"北京市海淀区丹棱街靠近互联网金融中心","dm":"iPhone 7 Plus","province":"北京市","district":"海淀区","events":[{"pos_name":"商城订单_待收货","val_next":"MallOrderListViewController","val_req":"IndexUserCenterViewController","type":"action","event_name":"SHOP_MY_ORDER_LOGISTIC_RECEIVED"}],"lng":"116.313100","category":"user_center","city":"北京市","tm":1591062109961,"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","ct":"iPhone","os":"iPhone 7 Plus","act":"click","net":"WiFi","uid":19240923,"mno":"中国移动","lat":"39.979126","sc":"414*736","app":"4.5.4","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056"},{"address":"北京市海淀区丹棱街靠近互联网金融中心","dm":"iPhone 7 Plus","province":"北京市","district":"海淀区","events":[{"pos_name":"商城订单_待收货","val_next":"MallOrderListViewController","val_req":"IndexUserCenterViewController","type":"action","event_name":"SHOP_MY_ORDER_LOGISTIC_RECEIVED"}],"lng":"116.313100","category":"user_center","city":"北京市","tm":1591062109950,"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","ct":"iPhone","os":"iPhone 7 Plus","act":"click","net":"WiFi","uid":19240923,"mno":"中国移动","lat":"39.979126","sc":"414*736","app":"4.5.4","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056"},{"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","category":"enter_view","uid":19240923,"mno":"中国移动","channel":"sns","ct":"iPhone","net":"WiFi","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056","os":"iPhone 7 Plus","lat":"39.979126","app":"4.5.4","dm":"iPhone 7 Plus","sc":"414*736","tm":1591062103305,"act":"view","lng":"116.313100","events":[{"pos_name":"启动","val_req":"BQIAppDelegate","type":"action","event_name":"START"}]},{"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","category":"community","uid":19240923,"mno":"中国移动","channel":"sns","ct":"iPhone","net":"WiFi","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056","os":"iPhone 7 Plus","lat":"39.979126","app":"4.5.4","dm":"iPhone 7 Plus","sc":"414*736","tm":1591062103141,"act":"view","lng":"116.313100","events":[{"type":"action","event_name":"COMMUNITY_ENTER","pos_name":"社区首页-精选"}]}]
+2020-06-02 10:37:14,260 INFO [com.boqii.report.web.ReportController] - [{"address":"北京市海淀区丹棱街靠近互联网金融中心","dm":"iPhone 7 Plus","province":"北京市","district":"海淀区","events":[{"event_name":"START","val_req":"BQIAppDelegate","type":"action","pos_name":"启动"}],"lng":"116.313100","category":"enter_view","city":"北京市","tm":1591065434095,"os":"iPhone 7 Plus","ct":"iPhone","act":"view","udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","net":"WiFi","uid":19240923,"mno":"中国移动","lat":"39.979126","sc":"414*736","app":"4.5.4","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056"},{"address":"北京市海淀区丹棱街靠近互联网金融中心","dm":"iPhone 7 Plus","province":"北京市","district":"海淀区","events":[{"pos_name":"商城订单_待收货","val_next":"MallOrderListViewController","val_req":"IndexUserCenterViewController","type":"action","event_name":"SHOP_MY_ORDER_LOGISTIC_RECEIVED"}],"lng":"116.313100","category":"user_center","city":"北京市","tm":1591062109961,"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","ct":"iPhone","os":"iPhone 7 Plus","act":"click","net":"WiFi","uid":19240923,"mno":"中国移动","lat":"39.979126","sc":"414*736","app":"4.5.4","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056"},{"address":"北京市海淀区丹棱街靠近互联网金融中心","dm":"iPhone 7 Plus","province":"北京市","district":"海淀区","events":[{"pos_name":"商城订单_待收货","val_next":"MallOrderListViewController","val_req":"IndexUserCenterViewController","type":"action","event_name":"SHOP_MY_ORDER_LOGISTIC_RECEIVED"}],"lng":"116.313100","category":"user_center","city":"北京市","tm":1591062109950,"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","ct":"iPhone","os":"iPhone 7 Plus","act":"click","net":"WiFi","uid":19240923,"mno":"中国移动","lat":"39.979126","sc":"414*736","app":"4.5.4","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056"},{"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","category":"enter_view","uid":19240923,"mno":"中国移动","channel":"sns","ct":"iPhone","net":"WiFi","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056","os":"iPhone 7 Plus","lat":"39.979126","app":"4.5.4","dm":"iPhone 7 Plus","sc":"414*736","tm":1591062103305,"act":"view","lng":"116.313100","events":[{"pos_name":"启动","val_req":"BQIAppDelegate","type":"action","event_name":"START"}]},{"udid":"6109ae9d33129ea796be93efe99ab5c251b3671a","category":"community","uid":19240923,"mno":"中国移动","channel":"sns","ct":"iPhone","net":"WiFi","idfa":"ECD21C1E-2630-47BD-8CF5-315A88E0C056","os":"iPhone 7 Plus","lat":"39.979126","app":"4.5.4","dm":"iPhone 7 Plus","sc":"414*736","tm":1591062103141,"act":"view","lng":"116.313100","events":[{"type":"action","event_name":"COMMUNITY_ENTER","pos_name":"社区首页-精选"}]}]
+2020-06-02 10:37:14,261 INFO [com.boqii.report.web.ReportController] - 发送成功
+2020-06-02 10:37:14,613 INFO [com.boqii.report.web.ReportController] - the topic is app
+2020-06-02 10:37:14,613 INFO [com.boqii.report.web.ReportController] - decode content is  [{"act":"click","events":[{"val_ref":"","value":"{\"userId\":\"k5T/JvdUAhh8CzF/2z0Ts8WGnTYsSz9zx6FL\"}","event_name":"TEMPLATE_HEAD"}],"uid":"","udid":"2bfaa36f-f6cd-438b-a1c7-ba0e4f206e07","browser":"Android Browser","sc":"392*688","dm":"Android 10","tm":1591065434570,"ct":"H5"}]
+2020-06-02 10:37:14,613 INFO [com.boqii.report.web.ReportController] - readTree is [{"act":"click","events":[{"val_ref":"","value":"{\"userId\":\"k5T/JvdUAhh8CzF/2z0Ts8WGnTYsSz9zx6FL\"}","event_name":"TEMPLATE_HEAD"}],"uid":"","udid":"2bfaa36f-f6cd-438b-a1c7-ba0e4f206e07","browser":"Android Browser","sc":"392*688","dm":"Android 10","tm":1591065434570,"ct":"H5"}]
+2020-06-02 10:37:14,613 INFO [com.boqii.report.web.ReportController] - [{"act":"click","events":[{"val_ref":"","value":"{\"userId\":\"k5T/JvdUAhh8CzF/2z0Ts8WGnTYsSz9zx6FL\"}","event_name":"TEMPLATE_HEAD"}],"uid":"","udid":"2bfaa36f-f6cd-438b-a1c7-ba0e4f206e07","browser":"Android Browser","sc":"392*688","dm":"Android 10","tm":1591065434570,"ct":"H5"}]
+2020-06-02 10:37:14,614 INFO [com.boqii.report.web.ReportController] - 发送成功
+2020-06-02 10:37:14,692 INFO [com.boqii.report.web.ReportController] - the topic is app
+2020-06-02 10:37:14,692 INFO [com.boqii.report.web.ReportController] - decode content is  [{"act":"click","events":[{"val_ref":"","value":"{\"userId\":\"k5T/JvdUAhh8CzF/2z0Ts8WGnTYsSz9zx6FL\"}","event_name":"TEMPLATE_HEAD"}],"uid":"","udid":"2bfaa36f-f6cd-438b-a1c7-ba0e4f206e07","browser":"Android Browser","sc":"392*688","dm":"Android 10","tm":1591065434632,"ct":"H5"}]
