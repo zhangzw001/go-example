@@ -81,7 +81,7 @@ func RandInt(min, max int) int {
 	return rand.Intn(max-min) + min
 	////方法二
 	//r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	//return r.Int63n(max-min) + min
+	//return r.Intn(max-min) + min
 }
 
 

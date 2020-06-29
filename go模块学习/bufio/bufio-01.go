@@ -2,6 +2,7 @@ package  main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 )
 
@@ -26,6 +27,8 @@ func main() {
 
 		// 测试1
 		io1 := bufio.NewScanner(os.Stdin)
-		rawline,_,_ ;= io1.
+		for io1.Scan() {
+			fmt.Println(io1.Text())
+		}
 
 }

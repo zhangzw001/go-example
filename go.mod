@@ -15,6 +15,10 @@ require (
 
 replace (
 	github.com/zhangzw001/go-example/go圣经/01/1.4 => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/01/1.4
-	github.com/zhangzw001/go-example/go圣经/01/1.8/WordGuess/src => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/01/1.8/WordGuess/src
-
+	github.com/zhangzw001/go-example/go圣经/02/2.5 => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/02/2.5
+	github.com/zhangzw001/go-example/go圣经/02/2.6/popcount => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/02/2.6/popcount
+	github.com/zhangzw001/go-example/go圣经/03/3.5/basename => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/03/3.5/3.5basename
+	github.com/zhangzw001/go-example/go圣经/03/3.5/comma => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/03/3.5/3.5comma
+	github.com/zhangzw001/go-example/go圣经/04/4.5/json-github => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/04/4.5/json-github
+	github.com/zhangzw001/go-example/go圣经/04/4.5/json-report => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/04/4.5/json-report
 )
