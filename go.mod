@@ -21,5 +21,6 @@ replace (
 	github.com/zhangzw001/go-example/go圣经/03/3.5/basename => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/03/3.5/3.5basename
 	github.com/zhangzw001/go-example/go圣经/03/3.5/comma => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/03/3.5/3.5comma
 	github.com/zhangzw001/go-example/go圣经/04/4.5/json-github => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/04/4.5/json-github
+	github.com/zhangzw001/go-example/go圣经/04/4.5/json-poster => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/04/4.5/json-poster/src
 	github.com/zhangzw001/go-example/go圣经/04/4.5/json-report => /oschina/golang/golanglearn/src/github.com/zhangzw001/go-example/go圣经/04/4.5/json-report
 )
