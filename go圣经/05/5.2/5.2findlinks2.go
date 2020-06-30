@@ -34,10 +34,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	//for _, link := range visit2(nil, doc ) {
-	//	fmt.Println(link)
-	//}
-	for  range visit2(nil, doc ) {
+	for _, link := range visit3(nil, doc ) {
+		fmt.Println(link)
 	}
 }
 
@@ -53,8 +51,26 @@ func visit2(links []string, n *html.Node) []string {
 
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		links = visit2(links, c )
-		fmt.Println("-----------")
-		fmt.Println(c)
 	}
+	return links
+}
+
+// visit appends to links each link found in n and returns the result.
+func visit3(links []string, n *html.Node) []string {
+	//递归出口
+	if n == nil { return links }
+	links = visit3(links,n.FirstChild)
+	links = visit3(links,n.NextSibling)
+
+	if n.Type == html.ElementNode && n.Data == "a" {
+		for _, a := range n.Attr {
+			if a.Key == "href" {
+				links = append(links, a.Val)
+			}
+		}
+	}
+
+	//for c := n.FirstChild; c != nil; c = c.NextSibling {
+	//}
 	return links
 }
