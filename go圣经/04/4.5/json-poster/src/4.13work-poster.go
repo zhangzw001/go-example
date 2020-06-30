@@ -24,7 +24,9 @@ const apikey = "837a1b8b"
 const apiUrl = "http://www.omdbapi.com/"
 
 func GetPoster(title string) {
-	resp, err := http.Get(strings.Join([]string{apiUrl,"?t=",url.QueryEscape(title),"&apikey=",apikey},""))
+	s := strings.Join([]string{apiUrl,"?t=",url.QueryEscape(title),"&apikey=",apikey},"")
+	fmt.Println(s)
+	resp, err := http.Get(s)
 	if err != nil {
 		log.Fatal( err )
 		return
@@ -32,7 +34,6 @@ func GetPoster(title string) {
 	defer resp.Body.Close()
 	var p Poster
 	json.NewDecoder(resp.Body).Decode(&p)
-	//fmt.Println(p.Title)
 	if p.Poster != "" {
 		downloadPoster(p.Poster)
 	}
@@ -89,12 +90,14 @@ func downloadPoster(url string ) {
 
 }
 
-func SearchByTitle(titles ...strings) {
+func SearchByTitle(titles ...string) {
 	var wg sync.WaitGroup
 	for _, title := range titles {
 		wg.Add(1)
 		go func() {
 				GetPoster(title)
-		}
+				wg.Done()
+		}()
 	}
+	wg.Wait()
 }
