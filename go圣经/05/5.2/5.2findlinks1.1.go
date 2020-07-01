@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"golang.org/x/net/html"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -21,14 +19,11 @@ func main() {
 		log.Fatalf("http.get error : %s\n",resp.Status)
 	}
 
-	result,err := ioutil.ReadAll(resp.Body)
-	if err != nil { log.Fatal(err )}
+	//result,err := ioutil.ReadAll(resp.Body)
+	//if err != nil { log.Fatal(err )}
+	//doc , err := html.Parse(bytes.NewReader(result))
 
-	//这里ioutil.ReadAll 返回的是[]byte, 开始不知道bytes.NewReader
-	//resultString :=fmt.Sprintf("%s\n",result)
-	//doc , err := html.Parse(strings.NewReader(resultString))
-	//
-	doc , err := html.Parse(bytes.NewReader(result))
+	doc, err := html.Parse(resp.Body)
 	if err != nil {
 		if _, err := fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err); err != nil { log.Fatal(err)}
 		os.Exit(1)
@@ -41,9 +36,9 @@ func main() {
 	//for _, link := range visittext(nil, doc ) {
 	//	fmt.Println(link)
 	//}
-
-	for _, link := range visit4(nil, doc ) {
-		fmt.Println(link)
+	map1 := make(map[string][]string)
+	for k, link := range visit4(map1, doc ) {
+		fmt.Println(k,link)
 	}
 }
 
@@ -101,17 +96,25 @@ func visittext(text []string , n *html.Node) []string {
 }
 
 //练习 5.4： 扩展visit函数，使其能够处理其他类型的结点，如images、scripts和style sheets。
-func visit4(links []string, n *html.Node) []string {
-	if n.Type == html.ElementNode && (n.Data == "a" || n.Data == "img" || n.Data == "scripts" || n.Data == "links"){
+func visit4(links map[string][]string, n *html.Node) map[string][]string {
+
+	if n.Type == html.ElementNode && (n.Data == "a" || n.Data == "img" || n.Data == "style" ){
 		for _, a := range n.Attr {
-			if a.Key == "href" || a.Key == "src" {
-				links = append(links, a.Val)
+			switch a.Key {
+			case "href":
+				links["href"] = append(links["href"],a.Val)
+			case "src":
+				links["img"] = append(links["img"],a.Val)
+			case "type":
+				links["style"] = append(links["style"],a.Val)
+			default:
+				return links
 			}
 		}
 	}
 
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		links = visit2(links, c )
+		links = visit4(links, c )
 	}
 	return links
 }
