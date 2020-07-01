@@ -38,7 +38,11 @@ func main() {
 	//	fmt.Println(link)
 	//}
 
-	for _, link := range visittext(nil, doc ) {
+	//for _, link := range visittext(nil, doc ) {
+	//	fmt.Println(link)
+	//}
+
+	for _, link := range visit4(nil, doc ) {
 		fmt.Println(link)
 	}
 }
@@ -94,4 +98,20 @@ func visittext(text []string , n *html.Node) []string {
 		text = visittext(text,c)
 	}
 	return text
+}
+
+//练习 5.4： 扩展visit函数，使其能够处理其他类型的结点，如images、scripts和style sheets。
+func visit4(links []string, n *html.Node) []string {
+	if n.Type == html.ElementNode && (n.Data == "a" || n.Data == "img" || n.Data == "scripts" || n.Data == "links"){
+		for _, a := range n.Attr {
+			if a.Key == "href" || a.Key == "src" {
+				links = append(links, a.Val)
+			}
+		}
+	}
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		links = visit2(links, c )
+	}
+	return links
 }
