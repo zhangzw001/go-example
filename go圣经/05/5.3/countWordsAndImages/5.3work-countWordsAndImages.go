@@ -1,17 +1,17 @@
-package main
+package countWordsAndImages
 
 import (
+	"bufio"
 	"fmt"
 	"golang.org/x/net/html"
 	"net/http"
-	"os"
 	"strings"
 )
 
-func main() {
-	words, images, _ := CountWordsAndImages(os.Args[1])
-	fmt.Printf("文字：%d,图片：%d \n", words, images)
-}
+//func main() {
+//	words, images, _ := CountWordsAndImages(os.Args[1])
+//	fmt.Printf("文字：%d,图片：%d \n", words, images)
+//}
 
 // CountWordsAndImages does an HTTP GET request for the HTML
 // document url and returns the number of words and images in it.
@@ -31,24 +31,31 @@ func CountWordsAndImages(url string) (words, images int, err error) {
 	return
 }
 func countWordsAndImages(n *html.Node) (words, images int) {
+	//这里只是统计words总数,如果需要看每个单词可以通过map
+	//counts := make(map[string]int)
+	texts, images := visit(nil, 0, n)
 
-	texts, images := visit3(nil, 0, n)
-	fmt.Println(texts)
 	for _, v := range texts {
 		v = strings.Trim(strings.TrimSpace(v), "\r\n")
 		if v == "" {
 			continue
 		}
-		fmt.Println(v)
-		fmt.Println(strings.Count(v, ""))
-		words += strings.Count(v, "")
+		scanner := bufio.NewScanner(strings.NewReader(v))
+		scanner.Split(bufio.ScanWords)
+		for scanner.Scan() {
+			words++
+			//counts[scanner.Text()] ++
+		}
+
 	}
-	//bare return
+	//for _,v := range counts {
+	//	words += v
+	//}
 	return
 }
 
 //递归循环html
-func visit3(texts []string, imgs int, n *html.Node) ([]string, int) {
+func visit(texts []string, imgs int, n *html.Node) ([]string, int) {
 	//文本
 	if n.Type == html.TextNode {
 		texts = append(texts, n.Data)
@@ -62,7 +69,7 @@ func visit3(texts []string, imgs int, n *html.Node) ([]string, int) {
 			continue
 		}
 
-		texts, imgs = visit3(texts, imgs, c)
+		texts, imgs = visit(texts, imgs, c)
 	}
 	//多返回值
 	return texts, imgs
