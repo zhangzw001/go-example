@@ -18,21 +18,22 @@ func outline(stack []string, n *html.Node) []string {
 	return stack
 }
 
-func outlinecount( n *html.Node) map[string]int {
-	outlinemap := make(map[string]int )
-	fmt.Println(outlinemap)
+//练习 5.2： 编写函数，记录在HTML树中出现的同名元素的次数。
+func outlinecount(outlinemap map[string]int,  n *html.Node) map[string]int {
 	if n.Type == html.ElementNode {
 		outlinemap[n.Data]++
 	}
 	for c := n.FirstChild; c != nil ; c = c.NextSibling {
-		outlinemap = outlinecount(c)
+		outlinemap = outlinecount(outlinemap, c)
 	}
 	return outlinemap
 }
+
+
 func main() {
 	//resp, err := http.Get(os.Args[1])
-	//resp, err := http.Get("http://localhost/5.2findlinks2_1.html")
-	resp, err := http.Get("https://www.baidu.com")
+	resp, err := http.Get("http://localhost/5.2findlinks2.html")
+	//resp, err := http.Get("https://www.baidu.com")
 	if err != nil { log.Fatal(err)}
 	if resp.StatusCode != http.StatusOK {
 		log.Fatal(resp.Status)
@@ -49,6 +50,6 @@ func main() {
 	//sourceStack = outline(sourceStack,doc)
 	//fmt.Println(sourceStack)
 	outlineMap := make(map[string]int)
-	outlineMap = outlinecount(doc)
+	outlineMap = outlinecount(outlineMap,doc)
 	fmt.Println(outlineMap)
 }

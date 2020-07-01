@@ -34,7 +34,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	for _, link := range visit3(nil, doc ) {
+	//for _, link := range visit3(nil, doc ) {
+	//	fmt.Println(link)
+	//}
+
+	for _, link := range visittext(nil, doc ) {
 		fmt.Println(link)
 	}
 }
@@ -56,6 +60,7 @@ func visit2(links []string, n *html.Node) []string {
 }
 
 // visit appends to links each link found in n and returns the result.
+//练习 5.1： 修改findlinks代码中遍历n.FirstChild链表的部分，将循环调用visit，改成递归调用。
 func visit3(links []string, n *html.Node) []string {
 	//递归出口
 	if n == nil { return links }
@@ -73,4 +78,20 @@ func visit3(links []string, n *html.Node) []string {
 	//for c := n.FirstChild; c != nil; c = c.NextSibling {
 	//}
 	return links
+}
+
+
+
+//练习 5.3： 编写函数输出所有text结点的内容。注意不要访问<script>和<style>元素,因为这些元素对浏览者是不可见的。
+func visittext(text []string , n *html.Node) []string {
+	if n.Type == html.TextNode {
+		text = append(text, n.Data)
+	}
+	for c := n.FirstChild; c != nil ; c = c.NextSibling {
+		if c.Data == "script" || c.Data == "style" {
+			continue
+		}
+		text = visittext(text,c)
+	}
+	return text
 }
