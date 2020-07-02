@@ -47,7 +47,7 @@ func startElement(n *html.Node) {
 		for _, a := range n.Attr {
 			attr = fmt.Sprintf(" %s=\"%s\" ",a.Key,a.Val)
 			//attr += " " + a.Key + "=" + "\"" + a.Val + "\" "
-			fmt.Println(a.Key, a.Val, n.Data, attr)
+			//fmt.Println(a.Key, a.Val, n.Data, attr)
 
 		}
 		fmt.Printf("%*s<%s%s", depth*2, "", n.Data,attr)
@@ -66,10 +66,7 @@ func startElement(n *html.Node) {
 func endElement(n *html.Node) {
 	if n.Type == html.ElementNode && n.FirstChild == nil && n.Data != "script" {
 		depth--
-		if n.FirstChild != nil {
-			
-		}
-		fmt.Printf("\n")
+		//fmt.Printf("\n")
 		return
 	}
 	if n.Type == html.ElementNode {
