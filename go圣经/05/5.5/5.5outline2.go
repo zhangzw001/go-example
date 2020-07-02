@@ -40,6 +40,8 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 var depth int
 func startElement(n *html.Node) {
 	if n.Type == html.ElementNode {
+		attr := ""
+		for _, a := range 
 		fmt.Printf("%*s<%s>\n", depth*2, "", n.Data)
 		depth++
 	}
