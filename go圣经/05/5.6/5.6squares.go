@@ -60,8 +60,8 @@ func main() {
 	fmt.Println("")
 	f2 := Fib2()
 	for i:= 0 ; i < 1000 ; i++ {
-		fmt.Printf("%4d ",f2())
-		//f2()
+		//fmt.Printf("%4d ",f2())
+		f2()
 
 	}
 	//fmt.Print64ln(time.Since(now).Nanoseconds())
@@ -69,9 +69,9 @@ func main() {
 
 	now = time.Now()
 	fmt.Println("")
-	for i:= 0 ; i < 20000 ; i++ {
-		//fmt.Print64f("%4d ",Fib3(i))
-		Fib3(i)
+	for i:= 0 ; i < 1000 ; i++ {
+		fmt.Printf("%4d ",Fib3(i))
+		//Fib3(i)
 
 	}
 	//fmt.Print64ln(time.Since(now).Nanoseconds())

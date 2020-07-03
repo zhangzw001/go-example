@@ -14,7 +14,7 @@ func BenchmarkFib(b *testing.B) {
 
 func BenchmarkFib2(b *testing.B) {
 	for i:=0 ; i < b.N ; i++ {
-		for i:= 0 ; i < 20000 ; i++ {
+		for i:= 0 ; i < 1000 ; i++ {
 			Fib2(i)
 		}
 	}
@@ -22,7 +22,7 @@ func BenchmarkFib2(b *testing.B) {
 
 func BenchmarkFib3(b *testing.B) {
 	for i:=0 ; i < b.N ; i++ {
-		for i:= 0 ; i < 20000 ; i++ {
+		for i:= 0 ; i < 1000 ; i++ {
 			Fib3()
 		}
 	}
