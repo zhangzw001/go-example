@@ -12,11 +12,22 @@ func squares() func() int {
 	}
 }
 
+
 func fib(n int ) int {
 		if n < 2 {
 			return 1
 		}
 		return fib(n-2) + fib(n-1)
+}
+
+func fib2() func() int {
+	var n int
+	return func() int {
+		n ++
+		if n < 2 {return n}
+		n = 2 * n  - 3
+		return n
+	}
 }
 
 func main() {
@@ -25,7 +36,11 @@ func main() {
 	fmt.Println(f()) // "4"
 	fmt.Println(f()) // "9"
 	fmt.Println(f()) // "16"
-	for i:=0 ; i < 10 ; i++ {
-		fmt.Println(fib(i))
+	//for i:=0 ; i < 10 ; i++ {
+	//	fmt.Println(fib(i))
+	//}
+	f2 := fib2()
+	for i:= 0 ; i < 10 ; i++ {
+		fmt.Println(f2())
 	}
 }
