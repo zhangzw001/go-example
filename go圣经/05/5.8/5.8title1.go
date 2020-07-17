@@ -12,14 +12,13 @@ func title(url string) error {
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
 	// Check Content-Type is HTML (e.g., "text/html;charset=utf-8").
 	ct := resp.Header.Get("Content-Type")
 	if ct != "text/html" && !strings.HasPrefix(ct,"text/html;") {
-		resp.Body.Close()
 		return fmt.Errorf("%s has type %s, not text/html",url, ct)
 	}
 	doc, err := html.Parse(resp.Body)
-	resp.Body.Close()
 	if err != nil {
 		return fmt.Errorf("parsing %s as HTML: %v", url, err)
 	}
@@ -42,4 +41,9 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if post != nil {
 		post(n)
 	}
+}
+
+func main() {
+
+	title("https://www.boqii.com/")
 }
