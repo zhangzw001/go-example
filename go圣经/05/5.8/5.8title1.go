@@ -15,6 +15,7 @@ func title(url string) error {
 	defer resp.Body.Close()
 	// Check Content-Type is HTML (e.g., "text/html;charset=utf-8").
 	ct := resp.Header.Get("Content-Type")
+	fmt.Println(ct)
 	if ct != "text/html" && !strings.HasPrefix(ct,"text/html;") {
 		return fmt.Errorf("%s has type %s, not text/html",url, ct)
 	}
@@ -23,6 +24,7 @@ func title(url string) error {
 		return fmt.Errorf("parsing %s as HTML: %v", url, err)
 	}
 	visitNode := func(n *html.Node) {
+		fmt.Println(n)
 		if n.Type == html.ElementNode && n.Data == "title" && n.FirstChild != nil {
 			fmt.Println(n.FirstChild.Data)
 		}
