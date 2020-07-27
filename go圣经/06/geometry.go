@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image/color"
 	"math"
 )
 
@@ -47,6 +48,10 @@ func (p *Point) ScaleBy(factor float64) {
 	p.Y *= factor
 }
 
+type ColoredPoint struct {
+	Point
+	Color color.RGBA
+}
 
 func main() {
 	p1 := Point{2,3}
@@ -101,4 +106,34 @@ func main() {
 	p.ScaleBy(2)
 	//或者接收器实参是类型*T，形参是类型T。编译器会隐式地为我们解引用，取到指针指向的实际变量：
 	pptr.Distance(p1)
+
+	//1. 不管你的method的receiver是指针类型还是非指针类型，都是可以通过指针/非指针类型进行调用的，编译器会帮你做类型转换。
+	//2. 在声明一个method的receiver该是指针还是非指针类型时，你需要考虑两方面的内部，第一方面是这个对象本身是不是特别大，如果声明为非指针变量时，调用会产生一次拷贝；第二方面是如果你用指针类型作为receiver，那么你一定要注意，这种指针类型指向的始终是一块内存地址，就算你对其进行了拷贝。熟悉C或者C艹的人这里应该很快能明白。
+
+	// 6.3.1
+	var cp ColoredPoint
+	cp.X = 1
+	fmt.Println(cp.Point.X) // "1"
+	cp.Point.Y = 2
+	fmt.Println(cp.Y) // "2"
+
+	red := color.RGBA{255, 0, 0, 255}
+	blue := color.RGBA{0, 0, 255, 255}
+	var p3 = ColoredPoint{Point{1, 1}, red}
+	var q3 = ColoredPoint{Point{5, 4}, blue}
+	fmt.Println(p3.Distance(q3.Point)) // "5"
+	p3.ScaleBy(2)
+	q3.ScaleBy(2)
+	fmt.Println(p3.Distance(q3.Point)) // "10"
+
+	// 一个ColoredPoint并不是一个Point，但他"has a"Point，并且它有从Point类里引入的Distance和ScaleBy方法。
+	//如果你喜欢从实现的角度来考虑问题，内嵌字段会指导编译器去生成额外的包装方法来委托已经声明好的方法，和下面的形式是等价的：
+	//func (p ColoredPoint) Distance(q Point) float64 {
+	//	return p.Point.Distance(q)
+	//}
+	//
+	//func (p *ColoredPoint) ScaleBy(factor float64) {
+	//	p.Point.ScaleBy(factor)
+	//}
+
 }
