@@ -31,20 +31,34 @@ func (path Path) Distance() float64 {
 	}
 	return sum
 }
+
+func PathDistance(path Path) float64 {
+	sum := 0.0
+	for i := range path {
+		if i > 0 {
+			sum += path[i-1].Distance(path[i])
+		}
+	}
+	return sum
+}
+
+func (p *Point) ScaleBy(factor float64) {
+	p.X *= factor
+	p.Y *= factor
+}
+
+
 func main() {
 	p1 := Point{2,3}
 	p2 := Point{4,6}
-	//1 可以看到，上面的两个函数调用都是Distance，但是却没有发生冲突。
+	//6.1.1 可以看到，上面的两个函数调用都是Distance，但是却没有发生冲突。
 	//第一个Distance的调用实际上用的是包级别的函数geometry.Distance，
 	//而第二个则是使用刚刚声明的Point，调用的是Point类下声明的Point.Distance方法。
 	fmt.Println(Distance(p1,p2))
 	fmt.Println(p1.Distance(p2))
 	fmt.Println(p1.Sum())
 
-	//2 Path是一个命名的slice类型，而不是Point那样的struct类型，然而我们依然可以为它定义方法。在能够给任意类型定义方法这一点上，Go和很多其它的面向对象的语言不太一样。因此在Go语言里，我们为一些简单的数值、字符串、slice、map来定义一些附加行为很方便。我们可以给同一个包内的任意命名类型定义方法，只要这个命名类型的底层类型(译注：这个例子里，底层类型是指[]Point这个slice，Path就是命名类型)不是指针或者interface。
-	p3 := Point{6 ,9 }
-	path := Path{p1,p2,p3,p1}
-	path.Distance()
+	//6.1.2 Path是一个命名的slice类型，而不是Point那样的struct类型，然而我们依然可以为它定义方法。在能够给任意类型定义方法这一点上，Go和很多其它的面向对象的语言不太一样。因此在Go语言里，我们为一些简单的数值、字符串、slice、map来定义一些附加行为很方便。我们可以给同一个包内的任意命名类型定义方法，只要这个命名类型的底层类型(译注：这个例子里，底层类型是指[]Point这个slice，Path就是命名类型)不是指针或者interface。
 	//让我们来调用一个新方法，计算三角形的周长：
 	perim := Path{
 		{1, 1},
@@ -53,4 +67,38 @@ func main() {
 		{1, 1},
 	}
 	fmt.Println(perim.Distance()) // "12"
+	fmt.Println(PathDistance(perim))
+	//译注： 在外部调用包时, 如果我们要用方法去计算perim的distance，还需要去写全geometry的包名，和其函数名，但是因为Path这个变量定义了一个可以直接用的Distance方法，
+	//所以我们可以直接写perim.Distance()。相当于可以少打很多字，作者应该是这个意思。因为在Go里包外调用函数需要带上包名，还是挺麻烦的。
+
+	//6.2.1
+	r := &Point{1,2}
+	r.ScaleBy(2)
+	fmt.Println(*r)
+
+	p := Point{1, 2}
+	pptr := &p
+	pptr.ScaleBy(2)
+	fmt.Println(p) // "{2, 4}"
+
+	(&p).ScaleBy(2)
+	fmt.Println(p) // "{2, 4}"
+	//6.2.2 如果接收器p是一个Point类型的变量，并且其方法需要一个Point指针作为接收器，我们可以用下面这种简短的写法：
+	p.ScaleBy(2) // = (*p).ScaleBy(2)
+	fmt.Println(p)
+	//编译器会隐式地帮我们用&p去调用ScaleBy这个方法。这种简写方法只适用于“变量”，包括struct里的字段比如p.X，以及array和slice内的元素比如perim[0]。
+	//我们不能通过一个无法取到地址的接收器来调用指针方法，比如临时变量的内存地址就无法获取得到：
+	// cannot call pointer method on Point literal
+	// cannot take the address of Point literal
+	//Point{1,2}.ScaleBy(2)
+
+
+	//6.2.3 以下调用都是ok的
+	//不论是接收器的实际参数和其接收器的形式参数相同，比如两者都是类型T或者都是类型*T：
+	Point{1,2}.Distance(p1)
+	pptr.ScaleBy(2)
+	//或者接收器实参是类型T，但接收器形参是类型*T，这种情况下编译器会隐式地为我们取变量的地址：
+	p.ScaleBy(2)
+	//或者接收器实参是类型*T，形参是类型T。编译器会隐式地为我们解引用，取到指针指向的实际变量：
+	pptr.Distance(p1)
 }
