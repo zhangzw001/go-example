@@ -136,4 +136,23 @@ func main() {
 	//	p.Point.ScaleBy(factor)
 	//}
 
+
+	//6.4.1 将p4.Distance(q4) 拆分为两步
+	p4 := Point{1,2}
+	q4 := Point{4,6}
+
+	distanceFromP := p4.Distance
+	fmt.Println(distanceFromP(q4))
+
+	var origin Point
+	fmt.Println(distanceFromP(origin))
+
+	scaleP := p4.ScaleBy
+	scaleP(2)
+	fmt.Println(p4)
+	scaleP(3)
+	fmt.Println(p4)
+	scaleP(10)
+	fmt.Println(p4)
+
 }
