@@ -63,6 +63,7 @@ func main() {
 	fmt.Println(p1.Distance(p2))
 	fmt.Println(p1.Sum())
 
+
 	//6.1.2 Path是一个命名的slice类型，而不是Point那样的struct类型，然而我们依然可以为它定义方法。在能够给任意类型定义方法这一点上，Go和很多其它的面向对象的语言不太一样。因此在Go语言里，我们为一些简单的数值、字符串、slice、map来定义一些附加行为很方便。我们可以给同一个包内的任意命名类型定义方法，只要这个命名类型的底层类型(译注：这个例子里，底层类型是指[]Point这个slice，Path就是命名类型)不是指针或者interface。
 	//让我们来调用一个新方法，计算三角形的周长：
 	perim := Path{
@@ -154,5 +155,11 @@ func main() {
 	fmt.Println(p4)
 	scaleP(10)
 	fmt.Println(p4)
+
+	//当T是一个类型时，方法表达式可能会写作T.f或者(*T).f，会返回一个函数"值"，这种函数会将其第一个参数用作接收器，
+	//所以可以用通常(译注：不写选择器)的方式来对其进行调用：
+	p41 := Point.Distance
+	fmt.Println(p41(p4,q4))
+	fmt.Println(p4.Distance(q4))
 
 }
