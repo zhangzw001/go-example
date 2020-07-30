@@ -158,6 +158,10 @@ func main() {
 
 	//当T是一个类型时，方法表达式可能会写作T.f或者(*T).f，会返回一个函数"值"，这种函数会将其第一个参数用作接收器，
 	//所以可以用通常(译注：不写选择器)的方式来对其进行调用：
+	// 译注：这个Distance实际上是指定了Point对象为接收器的一个方法func (p Point) Distance()，
+	// 但通过Point.Distance得到的函数需要比实际的Distance方法多一个参数，
+	// 即其需要用第一个额外参数指定接收器，后面排列Distance方法的参数。
+	// 看起来本书中函数和方法的区别是指有没有接收器，而不像其他语言那样是指有没有返回值。
 	p41 := Point.Distance
 	fmt.Println(p41(p4,q4))
 	fmt.Println(p4.Distance(q4))
