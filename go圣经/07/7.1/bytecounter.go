@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"os"
 )
 
 type ByteCounter int
@@ -50,14 +51,15 @@ type CountWriter struct {
 }
 
 func (cw *CountWriter) Write(p []byte) (int , error ) {
-	cw.Count += int
-	return len(p), nil
+	cw.Count += int64(len(p))
+	n, err := cw.Writer.Write(p)
+	return n,err
 }
 func CountingWriter(w io.Writer) (io.Writer, *int64) {
-	cw := CountWriter{
+	cw := &CountWriter{
 		Writer: w,
 	}
-	return &cw, &(cw.Count)
+	return cw, &(cw.Count)
 }
 
 func main() {
@@ -80,4 +82,9 @@ func main() {
 	var l LinesCounter
 	l.Write([]byte(str2))
 	fmt.Println(l)
+
+	//
+	rw, ilen := CountingWriter(os.Stdout)
+	rw.Write([]byte("hello,world\n"))
+	fmt.Println(*ilen)
 }
