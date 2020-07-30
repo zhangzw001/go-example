@@ -20,6 +20,19 @@ func (s *IntSet) Add(x int ) {
 		s.words = append(s.words,0)
 	}
 	s.words[word] |= 1 << bit
+	fmt.Println(s.words)
+}
+
+func (s *IntSet) AddAll(x ...int) {
+	for _,i := range x {
+		word,bit := i/64,uint(i%64)
+		for word >= len(s.words) {
+			s.words = append(s.words,0)
+		}
+		s.words[word] |= 1 << bit
+	}
+	fmt.Println(s.words)
+
 }
 
 func (s *IntSet) UnionWith(t *IntSet) {
@@ -53,17 +66,18 @@ func (s *IntSet) String() string {
 }
 
 func main() {
-	var x, y IntSet
+	var x IntSet
 	x.Add(1)
 	x.Add(144)
 	x.Add(9)
+	x.AddAll(1,9,144)
 	fmt.Println(x.String()) // "{1 9 144}"
-
-	y.Add(9)
-	y.Add(42)
-	fmt.Println(y.String()) // "{9 42}"
-
-	x.UnionWith(&y)
-	fmt.Println(x.String()) // "{1 9 42 144}"
-	fmt.Println(x.Has(9), x.Has(123)) // "true false"
+	//
+	//y.Add(9)
+	//y.Add(42)
+	//fmt.Println(y.String()) // "{9 42}"
+	//
+	//x.UnionWith(&y)
+	//fmt.Println(x.String()) // "{1 9 42 144}"
+	//fmt.Println(x.Has(9), x.Has(123)) // "true false"
 }
