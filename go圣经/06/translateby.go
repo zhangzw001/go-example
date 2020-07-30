@@ -34,8 +34,5 @@ func main() {
 	path1.TranslateBy(p,true)
 	fmt.Println(path1)
 
-	path2 := Path.TranslateBy
-	path22 := Path{p}
-	path2(path22,q,false)
-	fmt.Println(path2)
+
 }
