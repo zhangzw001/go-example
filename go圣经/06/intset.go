@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"reflect"
 )
 
 type IntSet struct {
@@ -80,4 +81,8 @@ func main() {
 	//x.UnionWith(&y)
 	//fmt.Println(x.String()) // "{1 9 42 144}"
 	//fmt.Println(x.Has(9), x.Has(123)) // "true false"
+
+	var s IntSet
+	var a fmt.Stringer = &s
+	fmt.Println(reflect.TypeOf(a))
 }
