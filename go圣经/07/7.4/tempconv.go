@@ -1,13 +1,21 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	tempconv0 "github.com/zhangzw001/go-example/go圣经/02/2.5"
+	"strconv"
 )
 
+type Celsius float64    // 摄氏温度
+type Fahrenheit float64 // 华氏温度
+
+func FToC(f Fahrenheit) Celsius { return Celsius((f - 32) * 5 / 9) }
 
 type celsiusFlag struct {
-	tempconv0.Celsius
+	Celsius
+}
+func (f *celsiusFlag) String() (string) {
+	return strconv.Itoa(int(f.Celsius))
 }
 
 func (f *celsiusFlag) Set(s string ) error {
@@ -19,17 +27,30 @@ func (f *celsiusFlag) Set(s string ) error {
 	fmt.Println(value,unit)
 	switch unit {
 	case "C","°C":
-		f.Celsius = tempconv0.Celsius(value)
+		f.Celsius = Celsius(value)
 		return nil
 	case "F","°F":
-		f.Celsius = tempconv0.FToC(tempconv0.Fahrenheit(value))
+		f.Celsius = FToC(Fahrenheit(value))
 		return nil
 	}
 	return fmt.Errorf("invalid temperature %q",s)
 }
-
+func CelsiusFlag(name string, value Celsius, usage string) *Celsius {
+	f := celsiusFlag{value}
+	flag.CommandLine.Var(&f, name, usage)
+	return &f.Celsius
+}
+//func CelsiusFlag(name string, value Celsius, usage string ) *Celsius {
+//	f := celsiusFlag{value}
+//	flag.CommandLine.Var(&f , name , usage)
+//	return &f.Celsius
+//}
 func main() {
 	var c celsiusFlag
 	c.Set("100F")
 	fmt.Println(c)
+
+	var temp = CelsiusFlag("temp",20.0,"the temperature")
+	flag.Parse()
+	fmt.Println(*temp)
 }
