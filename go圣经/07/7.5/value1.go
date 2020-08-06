@@ -5,7 +5,7 @@ import (
 )
 
 type A struct {
-	string
+	string string
 }
 func (a A) String() string {
 	return fmt.Sprintf("this is String() : %v\n",a.string)
