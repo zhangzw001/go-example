@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strconv"
 )
 
 const (
@@ -21,8 +20,8 @@ func KToC(k Kelvin) Celsius { return Celsius(k)-AbsoluteZeroC}
 type celsiusFlag struct {
 	Celsius
 }
-func (f *celsiusFlag) String() (string) {
-	return strconv.Itoa(int(f.Celsius))
+func (c Celsius) String() string {
+	return fmt.Sprintf("%g°C", c)
 }
 
 func (f *celsiusFlag) Set(s string ) error {
@@ -38,7 +37,6 @@ func (f *celsiusFlag) Set(s string ) error {
 		return nil
 	case "F","°F":
 		f.Celsius = FToC(Fahrenheit(value))
-		fmt.Println(f.Celsius)
 		return nil
 	case "K","°K":
 		f.Celsius = KToC(Kelvin(value))
@@ -50,11 +48,7 @@ func CelsiusFlag(name string, value Celsius, usage string) *Celsius {
 	flag.CommandLine.Var(&f, name, usage)
 	return &f.Celsius
 }
-//func CelsiusFlag(name string, value Celsius, usage string ) *Celsius {
-//	f := celsiusFlag{value}
-//	flag.CommandLine.Var(&f , name , usage)
-//	return &f.Celsius
-//}
+
 func main() {
 	//var c celsiusFlag
 	//c.Set("100F")
@@ -64,4 +58,10 @@ func main() {
 	var temp = CelsiusFlag("temp",20.0,"the temperature")
 	flag.Parse()
 	fmt.Println(*temp)
+
+
+	// 练习 7.7： 解释为什么帮助信息在它的默认值是20.0没有包含°C的情况下输出了°C。
+	// 因为输出的时候都会调用 String() 方法, 而CelsiusFlag
+	c := Celsius(100)
+	fmt.Println(c)
 }
