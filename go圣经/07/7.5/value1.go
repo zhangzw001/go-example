@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"reflect"
 )
 
 
@@ -31,6 +32,10 @@ func main() {
 		fmt.Println("空接口")
 	}
 
+	var t1 io.Writer
+	fmt.Println(reflect.TypeOf(t1),reflect.ValueOf(t1))
 
+	var t2 *bytes.Buffer
+	fmt.Println(reflect.TypeOf(t2),reflect.ValueOf(t2))
 
 }
