@@ -64,10 +64,10 @@ func (x customSort) Swap(i, j int)      { x.t[i], x.t[j] = x.t[j], x.t[i] }
 
 
 func main() {
-	sort.Sort(byArtist(tracks))
-	printTracks(tracks)
-	sort.Sort(byYear(tracks))
-	printTracks(tracks)
+	//sort.Sort(byArtist(tracks))
+	//printTracks(tracks)
+	//sort.Sort(byYear(tracks))
+	//printTracks(tracks)
 	//让我们定义一个多层的排序函数，它主要的排序键是标题，第二个键是年，第三个键是运行时间Length。下面是该排序的调用，其中这个排序使用了匿名排序函数：
 	//sort.Sort(customSort{tracks, func(x, y *Track) bool {
 	//	if x.Title != y.Title {
@@ -82,5 +82,8 @@ func main() {
 	//	return false
 	//}})
 	//printTracks(tracks)
-
+	sort.Sort(byYear(tracks))
+	printTracks(tracks)
+	sort.Stable(byYear(tracks))
+	printTracks(tracks)
 }

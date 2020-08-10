@@ -75,7 +75,6 @@ func less(x,y *Track ) bool {
 	return false
 }
 
-type  Stable
 func printTracks(tracks []*Track) {
 	const format = "%v\t%v\t%v\t%v\t%v\t\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
@@ -88,6 +87,13 @@ func printTracks(tracks []*Track) {
 }
 
 func main() {
+	//知识点
+	//1.sort包内置的提供了根据一些排序函数来对任何序列排序的功能
+	//2.Go语言的sort.Sort函数不会对具体的序列和它的元素做任何假设
+	//3.Go使用了一个接口类型sort.Interface来指定通用的排序算法和可能被排序到的序列类型之间的约定
+	//4.一个内置的排序算法需要三个东西：序列的长度，表示两个元素比较的结果，一种交换两个元素的方式
+	//5.接口值得动态类型如果是可以比较的，即可以作为map的key或者switch的语句操作数
+	//一个不包含任何值的nil接口值和一个刚好包含nil指针的接口值是不同的
 	//练习 7.8： 很多图形界面提供了一个有状态的多重排序表格插件：主要的排序键是最近一次点击过列头的列，第二个排序键是第二最近点击过列头的列，等等。
 	//定义一个sort.Interface的实现用在这样的表格中。比较这个实现方式和重复使用sort.Stable来排序的方式。
 	// 这种排序会保持第一个选择的列排完序的结果, 继续拍第二个选择的列(所以你会看到, 后面选择的列都在前面的结果之下)
@@ -107,5 +113,6 @@ func main() {
 	sort.Sort(tablesSort{tracks,less})
 	printTracks(tracks)
 
-	sort.Stable(tracks)
+
+
 }
