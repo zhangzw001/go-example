@@ -24,5 +24,4 @@ func main() {
 	names := []string{"1","4","2"}
 	sort.Sort(StringSlice(names))
 	fmt.Println(reflect.TypeOf(names))
-
 }
