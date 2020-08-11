@@ -60,7 +60,7 @@ func (db database) update(w http.ResponseWriter, req *http.Request) {
 func (db database) list(w http.ResponseWriter, req *http.Request) {
 	var shopList = template.Must(template.New("shopList").Parse(`
 	<h1>shopList</h1>
-	<table>
+	<table border="2">
 	<tr style='text-align:left'>
 	<th>item</th>
 	<th>	</th>
