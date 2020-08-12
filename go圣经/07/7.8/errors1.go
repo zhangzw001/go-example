@@ -3,36 +3,33 @@ package main
 import (
 	"errors"
 	"fmt"
+	"reflect"
 )
 type p struct {
-	//s string
+	s string
 }
 func main() {
 	//ok := errors.New("EOF")
 	//fmt.Println(ok,reflect.TypeOf(ok),ok.Error(),reflect.TypeOf(ok.Error()))
 	//fmt.Println(errors.New("EOF").Error() == errors.New("EOF").Error())
-	fmt.Println(errors.New("EOF") == errors.New("EOF")) //false
-	//
+
 	//fmt.Printf("%p,%p\n",errors.New("EOF"),errors.New("EOF"))
-	//
 	//fmt.Println(reflect.TypeOf(errors.New("EOF")),reflect.ValueOf(errors.New("EOF")))
 	//fmt.Println(reflect.TypeOf(errors.New("EOF")),reflect.TypeOf(errors.New("EOF")))
-	p1 := &p{}
-	p2 := &p{}
-	//fmt.Println(reflect.TypeOf(p1),reflect.TypeOf(p2))
-	fmt.Printf("%p,%v\n",p1,&(p{}))
-	fmt.Println(p1,p2,&p1,&p2)
-	fmt.Printf("%p,%v,%p\n",p1,&p1,&p1)
-	if p1 == p2 {
-		fmt.Println("相等")
-	}else {
-		fmt.Println("不等")
-	}
+	fmt.Println(errors.New("EOF") == errors.New("EOF")) //false
+	p1 := &p{"EOF"}
+	p2 := &p{"EOF"}
+	fmt.Println(reflect.TypeOf(p1),reflect.TypeOf(p2))
+	fmt.Printf("%v,%[2]v,%[1]p,%[2]p\n",p1,&p1)
+	fmt.Printf("%v,%[2]v,%[1]p,%[2]p\n",p2,&p2)
+	fmt.Println(p1 == p2 )
+	p3 := &p{}
+	p4 := &p{}
+	fmt.Println(p3 == p4 )
 
-	var p *int
-	a := 1
-	p = &a
-	fmt.Printf("%p,%v,%p\n",p,&a,&a)
+	//var p *int
+	//a := 1
+	//p = &a
 
 
 }

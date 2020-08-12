@@ -11,6 +11,10 @@ func main(){
 	fmt.Println(k)
 	fmt.Println(say("hello,world","lf"))
 	fmt.Println(reflect.TypeOf(k))  //检查变量类型
+	var pk *int
+	pk = &k
+	fmt.Printf("%p\n",pk)
+	fmt.Printf("%p\n",&k)
 
 	fmt.Println(&k)  // 获取变量在计算机内存中的地址，可在变量名前面加上&字符。
 	// &k 引用的是变量k的值，值所在的内存地址
