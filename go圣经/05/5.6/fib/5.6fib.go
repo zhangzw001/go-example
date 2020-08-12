@@ -20,7 +20,7 @@ func Fib(n int ) int {
 
 
 func Fib2(n int) int {
-	var f = [3]int{0, 1, 0}
+	var f = [3]int{0, 1, 1}
 	for i := 2; i <= n; i++ {
 		f[2] = f[0] + f[1]
 		f[0] = f[1]
