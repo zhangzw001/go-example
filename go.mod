@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394 // indirect
 	github.com/garyburd/redigo v1.6.0 // indirect
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/hpcloud/tail v1.0.0 // indirect
 	github.com/tidwall/gjson v1.6.0 // indirect
 	golang.org/x/net v0.0.0-20200625001655-4c5254603344
