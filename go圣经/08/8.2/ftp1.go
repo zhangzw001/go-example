@@ -36,7 +36,7 @@ func NewServer(s *ServerOpts) {
 func conn(c net.Conn) {
 	defer c.Close()
 	for {
-		io.WriteString(c, ">")
+		io.WriteString(c, "> ")
 		r := bufio.NewReader(c)
 		list, _, _ := r.ReadLine()
 		cmd := strings.Join([]string{string(list)}, "")
@@ -44,7 +44,6 @@ func conn(c net.Conn) {
 		cmdList := strings.Split(cmd, " ")
 		switch cmdList[0] {
 		case "ls":
-			io.WriteString(c, "正在执行命令\n")
 			cmd := exec.Command(cmdList[0], cmdList[1:]...)
 
 			stdout, err := cmd.StdoutPipe()
@@ -53,18 +52,23 @@ func conn(c net.Conn) {
 			}
 			defer stdout.Close()
 
-			//err = cmd.Start()
-			err = cmd.Run()
+			err = cmd.Start()
+			//err = cmd.Run()
 			if err != nil {
 				log.Fatal(err)
 			}
 			msg, _ := ioutil.ReadAll(stdout)
 			c.Write(msg)
-
+		case "close":
+			c.Close()
+		case "help":
+			io.WriteString(c, "help\t帮助\n")
+			io.WriteString(c, "ls /\t列出目录内文件\n")
+			io.WriteString(c, "close\t关闭连接\n")
 		default:
-			io.WriteString(c, "不支持的命令")
+			io.WriteString(c, "不支持的命令\n")
 		}
-		time.Sleep(1 * time.Second)
+		time.Sleep(100 * time.Millisecond)
 	}
 }
 
