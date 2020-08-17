@@ -57,6 +57,7 @@ func conn(c net.Conn) {
 			if err != nil {
 				log.Fatal(err)
 			}
+			//io.Copy(os.Stdout,c)
 			msg, _ := ioutil.ReadAll(stdout)
 			c.Write(msg)
 		case "close":
