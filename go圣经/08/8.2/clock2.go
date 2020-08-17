@@ -2,16 +2,17 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io"
 	"log"
 	"net"
+	"strconv"
 	"time"
 )
 
 func main() {
 	port := flag.Int("port",8000,"listen port")
-	listener , err := net.Listen("tcp", "localhost:"+port)
+	listenTo := net.JoinHostPort("localhost",strconv.Itoa(*port))
+	listener , err := net.Listen("tcp",listenTo)
 	if err != nil { log.Fatal(err )}
 	for {
 		conn, _ := listener.Accept()
