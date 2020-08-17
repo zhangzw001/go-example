@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
-	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -47,9 +46,21 @@ func conn(c net.Conn) {
 		case "ls":
 			io.WriteString(c, "正在执行命令\n")
 			cmd := exec.Command(cmdList[0], cmdList[1:]...)
-			cmd.Run()
-			msg, _ := ioutil.ReadAll(os.Stdout)
+
+			stdout, err := cmd.StdoutPipe()
+			if  err != nil {
+				log.Fatal(err)
+			}
+			defer stdout.Close()
+
+			//err = cmd.Start()
+			err = cmd.Run()
+			if err != nil {
+				log.Fatal(err)
+			}
+			msg, _ := ioutil.ReadAll(stdout)
 			c.Write(msg)
+
 		default:
 			io.WriteString(c, "不支持的命令")
 		}
