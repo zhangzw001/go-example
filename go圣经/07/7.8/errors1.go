@@ -16,3 +16,4 @@ func main() {
 	//fmt.Println(&p3 == &p4 )
 	//fmt.Println(*p3 == *p4 )
 }
+
