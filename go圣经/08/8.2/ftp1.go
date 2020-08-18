@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -16,6 +17,8 @@ type ServerOpts struct {
 	Host string
 	Port int
 }
+
+const uploadDir = "/tmp/ftp1/"
 
 func NewServer(s *ServerOpts) {
 	opts := ServerOpts{s.Host, s.Port}
@@ -33,11 +36,11 @@ func NewServer(s *ServerOpts) {
 
 }
 
-func conn(c net.Conn) {
-	defer c.Close()
+func conn(conn net.Conn) {
+	defer conn.Close()
 	for {
-		io.WriteString(c, "> ")
-		r := bufio.NewReader(c)
+		io.WriteString(conn, "> ")
+		r := bufio.NewReader(conn)
 		list, _, _ := r.ReadLine()
 		cmd := strings.Join([]string{string(list)}, "")
 		//io.WriteString(c,strings.Join([]string{string(list)},""))
@@ -59,23 +62,48 @@ func conn(c net.Conn) {
 			}
 			//io.Copy(os.Stdout,c)
 			msg, _ := ioutil.ReadAll(stdout)
-			c.Write(msg)
+			conn.Write(msg)
+		case "upload":
+			Upload(cmdList[1:],conn)
 		case "close":
-			c.Close()
+			conn.Close()
 		case "help":
-			io.WriteString(c, "help\t帮助\n")
-			io.WriteString(c, "ls /\t列出目录内文件\n")
-			io.WriteString(c, "close\t关闭连接\n")
+			io.WriteString(conn, "help\t帮助\n")
+			io.WriteString(conn, "ls /\t列出目录内文件\n")
+			io.WriteString(conn, "close\t关闭连接\n")
 		default:
-			io.WriteString(c, "不支持的命令\n")
+			io.WriteString(conn, "不支持的命令\n")
 		}
 		time.Sleep(100 * time.Millisecond)
 	}
 }
-
-func upload(file string , path string) {
-	
+// 支持多文件并发上传
+func Upload(files []string, conn net.Conn) {
+	//defer conn.Close()
+	for _ , file := range files {
+		go upload(file,conn)
+	}
 }
+func upload(file string , conn net.Conn) {
+		lfile := strings.Split(file,"/")
+		cfile := strings.Join([]string{uploadDir,lfile[len(lfile)-1]},"")
+		f , err := os.Create(cfile)
+		if err != nil {
+			log.Fatalf("文件创建失败: %v\n",cfile)
+		}
+
+
+		// 正常来说这里应该是写个客户端读取文件, 我这里仅测试, 写成本机读取 server(本机) 存储了
+		rFile , _ := os.Open(file)
+		readFile := bufio.NewScanner(rFile)
+		for readFile.Scan() {
+			f.WriteString(readFile.Text())
+			f.WriteString("\n")
+		}
+		io.WriteString(conn,"文件上传成功\n")
+		defer f.Close()
+}
+
 func main() {
 	opts := ServerOpts{"localhost", 8000}
 	NewServer(&opts)
