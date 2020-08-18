@@ -9,6 +9,7 @@ import (
 
 func main() {
 	conn , _ := net.Dial("tcp","localhost:8000")
+	conn.Close()
 	done := make(chan struct{})
 	go func() {
 		io.Copy(os.Stdout,conn)
@@ -16,7 +17,8 @@ func main() {
 		done <- struct{}{}
 	}()
 	mustCopy(conn,os.Stdin)
-	conn.Close()
+	//conn.Close()
+	c := net.TCPConn{}
 	<-done
 
 }
