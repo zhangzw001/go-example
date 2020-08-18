@@ -3,5 +3,8 @@ package test
 import "testing"
 
 func BenchmarkError2(b *testing.B) {
-	error2()
+	for i := 0 ; i < b.N ; i ++ {
+		error2()
+
+	}
 }

@@ -73,6 +73,9 @@ func conn(c net.Conn) {
 	}
 }
 
+func upload(file string , path string) {
+	
+}
 func main() {
 	opts := ServerOpts{"localhost", 8000}
 	NewServer(&opts)
