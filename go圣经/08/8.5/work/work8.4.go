@@ -9,7 +9,8 @@ import (
 	"time"
 )
 
-func echo(c net.Conn, shout string, delay time.Duration) {
+func echo(c net.Conn, shout string, delay time.Duration,wg *sync.WaitGroup) {
+	defer wg.Done()
 	fmt.Fprintln(c,"\t", strings.ToUpper(shout))
 	time.Sleep(delay)
 	fmt.Fprintln(c,"\t",shout)
@@ -19,20 +20,23 @@ func echo(c net.Conn, shout string, delay time.Duration) {
 }
 
 func handleConn(c net.Conn) {
-	defer c.Close()
 	wg := sync.WaitGroup{}
 
 	input := bufio.NewScanner(c)
 	for input.Scan() {
-		go echo(c,input.Text(),1*time.Second)
-		go func()
+		wg.Add(1)
+		//go echo(c,input.Text(),1*time.Second,&wg)
+		go echo(c,input.Text(),1*time.Second,&wg)
 	}
+	wg.Wait()
+	defer c.Close()
+
 }
 
 func main() {
 	listener , _ := net.Listen("tcp","localhost:8000")
 	for {
 		conn, _ := listener.Accept()
-		handleConn(conn)
+		go handleConn(conn)
 	}
 }

@@ -18,7 +18,8 @@ func main() {
 	}()
 	mustCopy(conn,os.Stdin)
 	//conn.Close()
-	c := net.TCPConn{}
+	cw := conn.(*net.TCPConn)
+	cw.CloseWrite()
 	<-done
 
 }
