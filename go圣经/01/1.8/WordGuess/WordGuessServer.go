@@ -29,13 +29,13 @@ func checkErr(err error) {
 	}
 }
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-		t, err := template.ParseFiles("src/view/index.html")
+		t, err := template.ParseFiles("go圣经/01/1.8/WordGuess/src/view/index.html")
 		checkErr(err)
 		checkErr(t.Execute(w, nil))
 
 }
 func guessHandler(w http.ResponseWriter, r *http.Request) {
-		t, err := template.ParseFiles("src/view/guess.html")
+	t, err := template.ParseFiles("go圣经/01/1.8/WordGuess/src/view/guess.html")
 		checkErr(err)
 		if r.Method == "GET" {
 			checkErr(t.Execute(w, nil))
@@ -47,7 +47,7 @@ func guessHandler(w http.ResponseWriter, r *http.Request) {
 			// 每次传递一个 web表单输入的值
 			WordGuess.WordGuess(w, guessValueNew)
 			if WordGuess.Flag == true {
-				t2,err := template.ParseFiles("src/view/guessReturn.html")
+				t2,err := template.ParseFiles("go圣经/01/1.8/WordGuess/src/view/guessReturn.html")
 				checkErr(err)
 				checkErr(t2.Execute(w,nil))
 				WordGuess.Flag = false
