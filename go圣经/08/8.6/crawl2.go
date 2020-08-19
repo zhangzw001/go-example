@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"golang.org/x/net/html"
+	"gopl.io/ch5/links"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -12,7 +14,26 @@ func main() {
 	//if err != nil { log.Fatal(err)}
 	//fmt.Println(a)
 	//breadthFirst(crawl, []string{"http://localhost/5.2findlinks2_1.html"})
-	breadthFirst(crawl, []string{"http://gopl.io/"})
+
+	worklist := make(chan []string)
+	var n int
+	n ++
+	go func() { worklist <- os.Args[1:]}()
+
+	seen := make(map[string]bool)
+
+	for ; n > 0 ; n -- {
+		list := <- worklist
+		for _, link := range list {
+			if !seen[link] {
+				seen[link] = true
+				n ++
+				go func(link string) {
+					worklist <- crawl2(link)
+				}(link)
+			}
+		}
+	}
 
 }
 
@@ -68,28 +89,13 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	}
 }
 
-// breadthFirst calls f for each item in the worklist.
-// Any items returned by f are added to the worklist.
-// f is called at most once for each item.
-func breadthFirst(f func(item string) []string, worklist []string) {
-	seen := make(map[string]bool)
-	for len(worklist) > 0 {
-		items := worklist
-		worklist = nil
-		for _, item := range items {
-			if !seen[item] {
-				seen[item] = true
-				worklist = append(worklist, f(item)...)
-			}
-		}
-	}
-}
-
-func crawl(url string) []string {
+// 限制并发数
+var tokens = make(chan struct{}, 10 )
+func crawl2(url string) []string {
 	fmt.Println(url)
-	list, err := Extract(url)
-	if err != nil {
-		log.Print(err)
-	}
+	tokens <- struct{}{}
+	list, err := links.Extract(url)
+	<-tokens
+	if err != nil { log.Print(err)}
 	return list
 }

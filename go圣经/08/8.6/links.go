@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"golang.org/x/net/html"
+	"gopl.io/ch5/links"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -12,7 +14,22 @@ func main() {
 	//if err != nil { log.Fatal(err)}
 	//fmt.Println(a)
 	//breadthFirst(crawl, []string{"http://localhost/5.2findlinks2_1.html"})
-	breadthFirst(crawl, []string{"http://gopl.io/"})
+
+	worklist := make(chan []string)
+	go func() { worklist <- os.Args[1:]}()
+
+	seen := make(map[string]bool)
+
+	for list := range worklist {
+		for _, link := range list {
+			if !seen[link] {
+				seen[link] = true
+				go func(link string) {
+					worklist <- crawl(link)
+				}(link)
+			}
+		}
+	}
 
 }
 
