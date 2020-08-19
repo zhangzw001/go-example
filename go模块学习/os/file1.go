@@ -1,8 +1,8 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io"
 	"log"
 	"os"
 )
@@ -20,7 +20,8 @@ func createFile(path string ) {
 
 	if err != nil { log.Fatal(err )}
 	// 自己添加换行
-	str := fmt.Sprintln("this is writerString test")
+	str := fmt.Sprintln("    this is writerString test    ")
+	fmt.Println(str)
 	// 1. writerString 写入
 	_, err = f.WriteString(str)
 	if err == nil {
@@ -45,15 +46,23 @@ func ReadFile(path string) {
 	// 打开文件
 	f, _ := os.Open(path)
 	defer f.Close()
-	//
-	buf := make([]byte, 1024)
-	// n代表从文件读取内容的长度
-	n , err  := f.Read(buf)
-	if err != nil && err != io.EOF {
-		log.Fatal(err )
+	//// 1. read 读取
+	//buf := make([]byte, 1024)
+	//// n代表从文件读取内容的长度
+	//n , err  := f.Read(buf)
+	//if err != nil && err != io.EOF {
+	//	log.Fatal(err )
+	//}
+	//fmt.Printf("buf = %v\n", string(buf[:n]))
+
+	// 2. newreader 读取
+	buf := bufio.NewScanner(f)
+	for buf.Scan() {
+		fmt.Println(buf.Text())
 	}
-	fmt.Printf("buf = %v\n", string(buf[:n]))
 }
+
+
 func main() {
 	createFile("file1.txt")
 	ReadFile("file1.txt")
