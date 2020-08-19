@@ -56,17 +56,48 @@ func main() {
 	//练习5：让用户输入一句话,找出所有e的位置
 	//var s5 string
 	//fmt.Scan(&s5)
-	buf := bufio.NewScanner(os.Stdin)
+	//for i,v := range s5 {
+	//	if v == "e" {
+	//		fmt.Println(i," ")
+	//	}
+	//}
+	//buf := bufio.NewScanner(os.Stdin)
+	//for buf.Scan() {
+	//	s5 := buf.Text()
+	//	for i, v := range s5 {
+	//		if v == 101 {
+	//			fmt.Printf("%v ", i)
+	//		}
+	//	}
+	//	break
+	//}
+
+	//bufread := bufio.NewReader(os.Stdin)
+	//input,_ := bufread.ReadString('\n')
+	//fmt.Println(input)
+	//for i,v := range input {
+	//	if v == 101 {
+	//		fmt.Printf("%v ",i)
+	//	}
+	//}
+
+    //练习6: 文本文件中存储了多个文章标题、作者，标题和作者之间用若干空格（数量不定）隔开，每行一个，标题有的长有的短，
+    //输出到控制台的时候最多标题长度10，如果超过10，则截取长度8的子串并且最后添加“...”，加一个竖线后输出作者的名字.
+	//历史就是这么回事			袁腾飞
+	//GO开发系列教程				老王
+	//坏掉是怎样炼成的怎样炼成的    六道
+	fmt.Printf("%10.8s %4.16s\n","标题","作者")
+	f,_ := os.Open("file2.txt")
+	buf := bufio.NewScanner(f)
 	for buf.Scan() {
-		s5 := buf.Text()
-		for i, v := range s5 {
-			if v == 101 {
-				fmt.Printf("%v ", i)
-			}
+		str := buf.Text()
+		slice := strings.Fields(str)
+		if len([]rune(slice[0])) > 10 {
+			fmt.Printf("%4.16s\t\t%s\n",string(([]rune(slice[0])[:10]))+"...",slice[1])
+			continue
 		}
+		fmt.Printf("%4.16s%4.4s\n",slice[0],slice[1])
 	}
 
-
-    //练习6: 文本文件中存储了多个文章标题、作者，标题和作者之间用若干空格（数量不定）隔开，每行一个，标题有的长有的短，输出到控制台的时候最多标题长度10，如果超过10，则截取长度8的子串并且最后添加“...”，加一个竖线后输出作者的名字.
 
 }
