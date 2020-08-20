@@ -13,7 +13,7 @@ import (
    那么只有从首页跳转三次以内能够跳到的页面才能被抓取到。
 */
 
-var depths int = 2
+var depths int = 3
 var depthFirst int = 0
 var tokens = make(chan struct{}, 20)
 func main() {
@@ -21,15 +21,16 @@ func main() {
 	//能够停止
 	crawl_one()
 }
-func web_crawl_one(url string) []string {
+
+func web_crawl_one(url string) map[string][]string {
 	fmt.Println(url)
 	list, err := web_Extract(url)
 	if err != nil { log.Println(err)}
 	return list
 }
-func web_crawl_two(url string) []string {
+func web_crawl_two(url string) map[string][]string {
 	fmt.Println(url)
-	fmt.Printf("当前深度: %v\n",depthFirst)
+	//fmt.Printf("当前深度: %v\n",depthFirst)
 	if depthFirst >= depths {
 		return nil
 	}
@@ -37,12 +38,13 @@ func web_crawl_two(url string) []string {
 	tokens <- struct{}{}
 	fmt.Printf("tokens : %v\n",tokens)
 	list, err := web_Extract(url)
+	//fmt.Println(list)
 	defer func() { <-tokens }()
 	if err != nil { log.Println(err)}
 	return list
 }
 
-func web_Extract(url string ) ([]string , error) {
+func web_Extract(url string ) (map[string][]string , error) {
 	resp, err := http.Get(url)
 	defer resp.Body.Close()
 	if err != nil { return nil, err }
@@ -51,19 +53,38 @@ func web_Extract(url string ) ([]string , error) {
 	doc, err := html.Parse(resp.Body)
 	if err != nil { return nil , fmt.Errorf("parsing %s as HTML: %v", url, err )}
 
-	var links []string
+	links := make(map[string][]string)
 	visitNode := func(n *html.Node) {
 		// html.ElementNode 子节点的html属性,
-		if n.Type == html.ElementNode && n.Data == "a" {
-			for _, a := range n.Attr {
-				if a.Key != "href" {
-					continue
+		//fmt.Println(n.Attr)
+		if n.Type == html.ElementNode {
+			switch n.Data {
+			case "img":
+					for _, a := range n.Attr {
+						if a.Key != "src" {
+							continue
+						}
+						link, err := resp.Request.URL.Parse(a.Val)
+						if err != nil {
+							continue
+						} //失败的url 忽略
+						links[n.Data] = append(links[n.Data], link.String())
+					}
+			case "a":
+				for _, a := range n.Attr {
+					if a.Key != "href" {
+						continue
+					}
+					link, err := resp.Request.URL.Parse(a.Val)
+					if err != nil {
+						continue
+					} //失败的url 忽略
+					links[n.Data] = append(links[n.Data], link.String())
 				}
-				link , err := resp.Request.URL.Parse(a.Val)
-				if err != nil { continue} //失败的url 忽略
-				links = append(links, link.String())
+			default:
 			}
 		}
+
 	}
 
 	web_forEachNode(doc, visitNode, nil )
@@ -93,8 +114,8 @@ func crawl_one() {
 	n ++
 	go func() {
 		list := []string{
-			"http://localhost/5.2findlinks2_1.html",
-			"http://gopl.io/",
+			"http://www.boqii.com/baike",
+			//"http://gopl.io/",
 			//"http://gopl.io/",
 			//"https://golang.org/help/",
 			//"https://golang.org/doc/",
@@ -118,7 +139,7 @@ func crawl_one() {
 				n ++
 				go func(link string) {
 					//worklist <- web_crawl_one(link)
-					worklist <- web_crawl_two(link)
+					worklist <- web_crawl_two(link)["a"]
 				}(link)
 			}
 		}
