@@ -107,10 +107,12 @@ func crawl_one() {
 	seen := make(map[string]bool)
 
 	for ; n > 0 ; n -- {
+		//阻塞, 等到worklist 写入数据
 		list := <-worklist
-		fmt.Printf("list: %v\n",list)
-		fmt.Printf("seen: %v\n",seen)
+		//fmt.Printf("list: %v\n",list)
+		//fmt.Printf("seen: %v\n",seen)
 		for _, link := range list {
+			// 只要发现一个没有爬过的连接, 就n++, 就继续循环一次, 从chan worklist 继续读取新url
 			if !seen[link ] {
 				seen[link] = true
 				n ++
