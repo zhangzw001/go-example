@@ -16,7 +16,18 @@ import (
 var depths int = 3
 var depthFirst int = 0
 var tokens = make(chan struct{}, 20)
-
+func main() {
+	//程序不会停止,即时已经完成爬取
+	crawl_one()
+	//能够停止
+	crawl_one()
+}
+func web_crawl_one(url string) []string {
+	fmt.Println(url)
+	list, err := web_Extract(url)
+	if err != nil { log.Println(err)}
+	return list
+}
 func web_crawl_two(url string) []string {
 	fmt.Println(url)
 	if depthFirst >= depths {
@@ -42,7 +53,7 @@ func web_Extract(url string ) ([]string , error) {
 
 	var links []string
 	visitNode := func(n *html.Node) {
-		// html.ElementNode 就是子节点的html属性, 
+		// html.ElementNode 子节点的html属性,
 		if n.Type == html.ElementNode && n.Data == "a" {
 			for _, a := range n.Attr {
 				if a.Key != "href" {
@@ -63,5 +74,48 @@ func web_forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)
 	}
-	for c := n.FirstChild ;
+	for c := n.FirstChild ; c != nil ; c = c.NextSibling {
+		web_forEachNode(c, pre, post)
+	}
+
+	if post != nil {
+		post(n)
+	}
+}
+
+
+//
+func crawl_one() {
+	worklist := make(chan []string)
+
+	//
+	var n int
+	n ++
+	go func() {
+		list := []string{
+			"http://gopl.io/",
+			"http://gopl.io/",
+			"https://golang.org/help/",
+			"https://golang.org/doc/",
+			"https://golang.org/blog/",
+		}
+		worklist <- list
+	}()
+
+	//并发爬取
+	seen := make(map[string]bool)
+
+	for ; n > 0 ; n -- {
+		list := <-worklist
+		for _, link := range list {
+			if !seen[link ] {
+				seen[link] = true
+				n ++
+				go func(link string) {
+					//worklist <- web_crawl_one(link)
+					worklist <- web_crawl_two(link)
+				}(link)
+			}
+		}
+	}
 }
