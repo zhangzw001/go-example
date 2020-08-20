@@ -86,17 +86,17 @@ func main() {
 	//历史就是这么回事			袁腾飞
 	//GO开发系列教程				老王
 	//坏掉是怎样炼成的怎样炼成的    六道
-	fmt.Printf("%10.8s %4.16s\n","标题","作者")
+	fmt.Printf("%4.16s\t\t%4.16s\n","标题","作者")
 	f,_ := os.Open("file2.txt")
 	buf := bufio.NewScanner(f)
 	for buf.Scan() {
 		str := buf.Text()
 		slice := strings.Fields(str)
 		if len([]rune(slice[0])) > 10 {
-			fmt.Printf("%4.16s\t\t%s\n",string(([]rune(slice[0])[:10]))+"...",slice[1])
+			fmt.Printf("%4.16s|%s\n",string(([]rune(slice[0])[:10]))+"...",slice[1])
 			continue
 		}
-		fmt.Printf("%4.16s%4.4s\n",slice[0],slice[1])
+		fmt.Printf("%.16s|%.16s\n",slice[0],slice[1])
 	}
 
 
