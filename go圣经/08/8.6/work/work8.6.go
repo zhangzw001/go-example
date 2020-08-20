@@ -13,12 +13,11 @@ import (
    那么只有从首页跳转三次以内能够跳到的页面才能被抓取到。
 */
 
-var depths int = 3
+var depths int = 2
 var depthFirst int = 0
 var tokens = make(chan struct{}, 20)
 func main() {
 	//程序不会停止,即时已经完成爬取
-	crawl_one()
 	//能够停止
 	crawl_one()
 }
@@ -30,6 +29,7 @@ func web_crawl_one(url string) []string {
 }
 func web_crawl_two(url string) []string {
 	fmt.Println(url)
+	fmt.Printf("当前深度: %v\n",depthFirst)
 	if depthFirst >= depths {
 		return nil
 	}
@@ -93,11 +93,12 @@ func crawl_one() {
 	n ++
 	go func() {
 		list := []string{
+			"http://localhost/5.2findlinks2_1.html",
 			"http://gopl.io/",
-			"http://gopl.io/",
-			"https://golang.org/help/",
-			"https://golang.org/doc/",
-			"https://golang.org/blog/",
+			//"http://gopl.io/",
+			//"https://golang.org/help/",
+			//"https://golang.org/doc/",
+			//"https://golang.org/blog/",
 		}
 		worklist <- list
 	}()
@@ -107,6 +108,8 @@ func crawl_one() {
 
 	for ; n > 0 ; n -- {
 		list := <-worklist
+		fmt.Printf("list: %v\n",list)
+		fmt.Printf("seen: %v\n",seen)
 		for _, link := range list {
 			if !seen[link ] {
 				seen[link] = true
