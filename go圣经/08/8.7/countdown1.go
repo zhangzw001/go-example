@@ -25,10 +25,10 @@ func main() {
 		case <-abort:
 			fmt.Println("aborted...")
 			return
-			//os.Exit(1)
+		default:
+
 		}
 	}
 
 	//launch()
 }
-
