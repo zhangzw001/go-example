@@ -21,7 +21,7 @@ func echo(c net.Conn, shout string, delay time.Duration) {
 }
 
 func handleConn(c net.Conn) {
-	ch := make(chan string )
+	ch := make(chan string)
 	input := bufio.NewScanner(c)
 	wg := sync.WaitGroup{}
 	wg.Add(1)
@@ -33,13 +33,14 @@ func handleConn(c net.Conn) {
 			case <-time.After(3 * time.Second):
 				c.Close()
 			case input := <-ch:
-				echo(c, input, 1*time.Second)
+				//如果需要对执行时间做超时, 则可以用 goroutine去执行
+				echo(c, input, 3*time.Second)
 			}
 		}
 	}()
-		for input.Scan() {
-			ch <- input.Text()
-		}
+	for input.Scan() {
+		ch <- input.Text()
+	}
 	wg.Wait()
 
 }
@@ -58,9 +59,7 @@ func main() {
 	}
 }
 
-
-
-//网上别人写的
+//网上别人写的(echo 函数这里改成 非 goroutine, 因为goroutine会导致 进入timeout即时,如果echo执行了6秒,就会超时退出了
 func handleConn2(c net.Conn) {
 	input := bufio.NewScanner(c)
 	var wg sync.WaitGroup
@@ -75,7 +74,7 @@ func handleConn2(c net.Conn) {
 				c.Close()
 			case mes := <-message:
 				wg.Add(1)
-				echo(c,mes,1*time.Second)
+				echo(c, mes, 1*time.Second)
 				//go func(c net.Conn, shout string, delay time.Duration) {
 				//	defer wg.Done()
 				//	fmt.Fprintln(c, "\t", strings.ToUpper(shout))
