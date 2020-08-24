@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 )
 
@@ -19,6 +20,7 @@ const (
 
 var verbose = flag.Bool("v", false, "show verbose progress messages")
 
+var sema = make(chan struct{}, 5)
 func main() {
 	flag.Parse()
 	roots := flag.Args()
@@ -27,12 +29,16 @@ func main() {
 		roots = []string{"."}
 	}
 	fileSizes := make(chan int64)
+	var wg sync.WaitGroup
+	for _, root := range roots {
+		wg.Add(1)
+		go walkDir(root, &wg, fileSizes)
+	}
 	go func() {
-		for _, root := range roots {
-			walkDir(root, fileSizes)
-		}
+		wg.Wait()
 		close(fileSizes)
 	}()
+
 
 	var tick <-chan time.Time
 	n := make(chan struct{})
@@ -77,12 +83,14 @@ func printDiskUsage(nfiles, nbytes int64) {
 	}
 }
 
-func walkDir(dir string, fileSizes chan<- int64) {
+func walkDir(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
+	defer wg.Done()
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
+			wg.Add(1)
 			subdir := filepath.Join(dir, entry.Name())
 			//fmt.Println(subdir, dir, entry.Name())
-			walkDir(subdir, fileSizes)
+			walkDir(subdir,wg, fileSizes)
 		} else {
 			fileSizes <- entry.Size()
 		}
@@ -90,6 +98,8 @@ func walkDir(dir string, fileSizes chan<- int64) {
 }
 
 func dirents(dir string) []os.FileInfo {
+	sema <- struct{}{}
+	defer func() { <-sema }()
 	entries, err := ioutil.ReadDir(dir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "du1: %v\n", err)
