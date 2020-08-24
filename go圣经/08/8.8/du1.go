@@ -56,6 +56,7 @@ func walkDir(dir string, fileSizes chan<-int64) {
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
 			subdir := filepath.Join(dir, entry.Name())
+			fmt.Println(subdir,dir,entry.Name())
 			walkDir(subdir,fileSizes)
 		} else {
 			fileSizes <- entry.Size()
