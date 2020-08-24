@@ -1,13 +1,11 @@
-package main
+package dudu
 
 import (
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
-	"time"
 )
 
 const (
@@ -18,34 +16,35 @@ const (
 	T
 )
 
-var verbose = flag.Bool("v", false, "show verbose progress messages")
 
 var sema = make(chan struct{}, 10)
-func main() {
-	flag.Parse()
-	roots := flag.Args()
-
-	if len(roots) == 0 {
-		roots = []string{"."}
-	}
-	fileSizes := make(chan int64)
+//func main() {
+//	flag.Parse()
+//	roots := flag.Args()
+//
+//	if len(roots) == 0 {
+//		roots = []string{"."}
+//	}
+//	for {
+//		Du(roots)
+//		time.Sleep(2 * time.Second)
+//	}
+//}
+func Du(roots []string ) {
 	var wg sync.WaitGroup
+	var nfiles, nbytes int64
+	n := make(chan struct{})
+	fileSizes := make(chan int64)
+
+	go func() {
+		wg.Wait()
+		defer close(fileSizes)
+	}()
+
 	for _, root := range roots {
 		wg.Add(1)
 		go walkDir(root, &wg, fileSizes)
 	}
-	go func() {
-		wg.Wait()
-		close(fileSizes)
-	}()
-
-
-	var tick <-chan time.Time
-	n := make(chan struct{})
-	if *verbose {
-		tick = time.Tick(100 * time.Millisecond)
-	}
-	var nfiles, nbytes int64
 
 loop:
 	for {
@@ -53,22 +52,19 @@ loop:
 		case size, ok := <-fileSizes:
 			if !ok {
 				go func() {
-					n <- struct{}{}
+					n <- struct {}{}
 				}()
 				break
 				//break loop
 			}
 			nfiles++
 			nbytes += size
-		case <-tick:
-			printDiskUsage(nfiles, nbytes)
 		case <-n:
 			printDiskUsage(nfiles, nbytes)
 			break loop
 		}
 	}
 }
-
 func printDiskUsage(nfiles, nbytes int64) {
 	switch {
 	case nbytes > G:
@@ -107,3 +103,5 @@ func dirents(dir string) []os.FileInfo {
 	}
 	return entries
 }
+
+
