@@ -71,7 +71,7 @@ loop:
 			for range fileSizes {
 
 			}
-			return 
+			return
 		case size, ok := <-fileSizes:
 			if !ok {
 				go func() {
