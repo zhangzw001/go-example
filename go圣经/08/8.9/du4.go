@@ -107,6 +107,10 @@ func printDiskUsage(nfiles, nbytes int64) {
 
 func walkDir(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
 	defer wg.Done()
+	//轮询是否有退出输入信号
+	if cancelled() {
+		return
+	}
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
 			wg.Add(1)
