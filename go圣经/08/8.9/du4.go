@@ -53,6 +53,7 @@ func main() {
 	// Cancel traversal when input is detected.
 	go func() {
 		os.Stdin.Read(make([]byte,1))
+		fmt.Println("退出...")
 		close(done)
 	}()
 
@@ -124,8 +125,15 @@ func walkDir(dir string, wg *sync.WaitGroup, fileSizes chan<- int64) {
 }
 
 func dirents(dir string) []os.FileInfo {
-	sema <- struct{}{}
-	defer func() { <-sema }()
+	select {
+	case sema <- struct{}{}:
+		case <-done:
+			return nil // cancelled
+	}
+	defer func() {<-sema}()
+
+	//sema <- struct{}{}
+	//defer func() { <-sema }()
 	entries, err := ioutil.ReadDir(dir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "du1: %v\n", err)
