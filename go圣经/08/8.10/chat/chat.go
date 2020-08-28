@@ -4,10 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"strings"
 )
 
 type client chan<- string
 
+var user = make(map[string]string)
 var (
 	entering = make(chan client)
 	leaving  = make(chan client)
@@ -39,9 +41,20 @@ func HandleConn(conn net.Conn) {
 	ch := make(chan string ) //outgoing client messages
 	go clientWriter(conn, ch)
 
+
 	who := conn.RemoteAddr().String()
+	if user[who] != "" {
+		messages <- user[who] + " welcome back"
+	}else {
+		fmt.Println("等待输入昵称")
+		buf := bufio.NewReader(conn)
+		tmp,_ := buf.ReadString('\n')
+		user[who] = strings.ReplaceAll(tmp,"\n","")
+		who = user[who]
+	}
+	fmt.Println(who,user)
 	ch <- "You are " + who
-	messages <- who + " has arrived"
+	messages <- who + "  has arrived"
 	entering <- ch
 
 	input := bufio.NewScanner(conn)
@@ -50,7 +63,7 @@ func HandleConn(conn net.Conn) {
 	}
 
 	leaving <- ch
-	messages <- who + " has left"
+	messages <- who + "  has left"
 	conn.Close()
 }
 
