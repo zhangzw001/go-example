@@ -43,27 +43,28 @@ func HandleConn(conn net.Conn) {
 
 
 	who := conn.RemoteAddr().String()
-	if user[who] != "" {
-		messages <- user[who] + " welcome back"
-	}else {
-		fmt.Println("等待输入昵称")
-		buf := bufio.NewReader(conn)
-		tmp,_ := buf.ReadString('\n')
-		user[who] = strings.ReplaceAll(tmp,"\n","")
-		who = user[who]
+	buf := bufio.NewReader(conn)
+	tmp , _ := buf.ReadString('\n')
+	nickname := strings.Replace(tmp,"\n","",-1)
+
+	if user[nickname] != "" {
+		fmt.Printf("老用户: %s : %s ,%s\n",nickname,user[nickname],who)
+		messages <- user[nickname] + " welcome back, " + who
 	}
+	user[nickname] = who
+	whoString := nickname+"@"+user[nickname]
 	fmt.Println(who,user)
-	ch <- "You are " + who
-	messages <- who + "  has arrived"
+	ch <- "You are " + whoString
+	messages <- whoString + "  has arrived"
 	entering <- ch
 
 	input := bufio.NewScanner(conn)
 	for input.Scan() {
-		messages <- who + ": " + input.Text()
+		messages <- whoString + ": " + input.Text()
 	}
 
 	leaving <- ch
-	messages <- who + "  has left"
+	messages <- whoString + "  has left"
 	conn.Close()
 }
 
