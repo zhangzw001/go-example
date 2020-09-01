@@ -25,22 +25,22 @@ func icer(iced chan<- *Cake, cooked2 <-chan *Cake) {
 }
 func main() {
 	cake1 := make(chan *Cake)
-	timeout := make(chan time.Time)
+	//timeout := make(chan time.Time)
 	//go func() {
 	//	time.Sleep(2 * time.Second)
 	//	timeout <-
 	//}()
-loop:
-	for {
+		ticker := time.NewTicker(2 * time.Second)
+
+		go baker(cake1)
+
 		select {
-		case timeout <- time.After(2 * time.Second):
+		case <- ticker.C:
 			fmt.Println("退出...")
-			break  loop
+			ticker.Stop()
 		default:
 			//go baker(cake1)
-			go icer(cake1,cake1)
-			time.Sleep(1 * time.Second)
+			//go icer(cake1,cake1)
 		}
-	}
-
+	time.Sleep(5 * time.Second)
 }
