@@ -33,14 +33,17 @@ func main() {
 		ticker := time.NewTicker(2 * time.Second)
 
 		go baker(cake1)
-
-		select {
-		case <- ticker.C:
-			fmt.Println("退出...")
-			ticker.Stop()
-		default:
-			//go baker(cake1)
-			//go icer(cake1,cake1)
+		loop:
+		for {
+			select {
+			case <-ticker.C:
+				fmt.Println("退出...")
+				ticker.Stop()
+				break loop
+			default:
+				go baker(cake1)
+				go icer(cake1,cake1)
+				time.Sleep(1 * time.Second)
+			}
 		}
-	time.Sleep(5 * time.Second)
 }

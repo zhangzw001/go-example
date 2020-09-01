@@ -3,6 +3,7 @@ package main
 import (
 	"bank/bankapi"
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -20,5 +21,21 @@ func main() {
 		bankapi.Deposit1(100)
 		fmt.Println("=",bankapi.Balance1())
 	}()
+
+
+	go func() {
+		bankapi.Withdraw(199)
+		fmt.Println("=",bankapi.Balance1())
+	}()
+
+	go func() {
+		err := bankapi.Withdraw(102)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("=", bankapi.Balance1())
+	}()
 	time.Sleep(1 * time.Second)
+	fmt.Println("=", bankapi.Balance1())
+
 }
