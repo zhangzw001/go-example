@@ -32,7 +32,8 @@ func Withdraw4(amount int) bool  {
 	deposite4(-amount)
 
 	if balance4 < 0 {
-		//如果小于0,说明余额不足,还原
+		// 如果小于0,说明余额不足,还原
+		// 但如果某个时刻刚好程序在还原前挂了, 会导致数据异常吧?
 		deposite4(amount)
 		return false
 	}
