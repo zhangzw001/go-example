@@ -7,7 +7,6 @@ import (
 	"memo/memo1"
 	"net/http"
 	"sync"
-	"testing"
 	"time"
 )
 
@@ -25,7 +24,7 @@ func httpGetBody(url string) (interface{}, error) {
 	return ioutil.ReadAll(resp.Body)
 }
 
-func TestMemo1(t *testing.T) {
+func main() {
 	//m := memo1.New(httpGetBody)
 	//for _,url := range incomingURLs() {
 	//	start := time.Now()
@@ -52,5 +51,5 @@ func TestMemo1(t *testing.T) {
 			n.Done()
 		}(url)
 	}
-
+	time.Sleep(1 * time.Second)
 }
