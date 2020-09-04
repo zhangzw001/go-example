@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"memo/memo1"
-	"memo/memo2"
 	"memo/memo4"
 	"net/http"
 	"sync"
@@ -38,42 +36,42 @@ func main() {
 	//		url, time.Since(start), len(value.([]byte)))
 	//}
 
-	m1 := memo1.New(httpGetBody)
-	var n1 sync.WaitGroup
-	for _,url := range incomingURLs() {
-		n1.Add(1)
-		go func(url string) {
-			start := time.Now()
-			value, err := m1.Get(url)
-			if err != nil {
-				log.Print(err)
-			}
-			fmt.Printf("%s,%s,%d bytes\n",
-				url, time.Since(start),len(value.([]byte)))
-			n1.Done()
-		}(url)
-	}
-	n1.Wait()
+	//m1 := memo1.New(httpGetBody)
+	//var n1 sync.WaitGroup
+	//for _,url := range incomingURLs() {
+	//	n1.Add(1)
+	//	go func(url string) {
+	//		start := time.Now()
+	//		value, err := m1.Get(url)
+	//		if err != nil {
+	//			log.Print(err)
+	//		}
+	//		fmt.Printf("%s,%s,%d bytes\n",
+	//			url, time.Since(start),len(value.([]byte)))
+	//		n1.Done()
+	//	}(url)
+	//}
+	//n1.Wait()
 
 
-	start := time.Now()
-	m := memo2.New(httpGetBody)
-	var n2 sync.WaitGroup
-	for _,url := range incomingURLs() {
-		n2.Add(1)
-		go func(url string) {
-			start := time.Now()
-			value, err := m.Get(url)
-			if err != nil {
-				log.Print(err)
-			}
-			fmt.Printf("%s,%s,%d bytes\n",
-				url, time.Since(start),len(value.([]byte)))
-			n2.Done()
-		}(url)
-	}
-	n2.Wait()
-	fmt.Println(time.Since(start))
+	//start := time.Now()
+	//m := memo2.New(httpGetBody)
+	//var n2 sync.WaitGroup
+	//for _,url := range incomingURLs() {
+	//	n2.Add(1)
+	//	go func(url string) {
+	//		start := time.Now()
+	//		value, err := m.Get(url)
+	//		if err != nil {
+	//			log.Print(err)
+	//		}
+	//		fmt.Printf("%s,%s,%d bytes\n",
+	//			url, time.Since(start),len(value.([]byte)))
+	//		n2.Done()
+	//	}(url)
+	//}
+	//n2.Wait()
+	//fmt.Println(time.Since(start))
 
 	//start := time.Now()
 	//m := memo3.New(httpGetBody)
@@ -96,11 +94,10 @@ func main() {
 
 	start4 := time.Now()
 	m4 := memo4.New(httpGetBody)
-	var n sync.WaitGroup
+	var n4 sync.WaitGroup
 	for _,url := range incomingURLs() {
-		n.Add(1)
-
-		m4.Get(url)
+		n4.Add(1)
+		//m4.Get(url)
 		go func(url string) {
 			start := time.Now()
 			value, err := m4.Get(url)
@@ -109,9 +106,28 @@ func main() {
 			}
 			fmt.Printf("%s,%s,%d bytes\n",
 				url, time.Since(start),len(value.([]byte)))
-			n.Done()
+			n4.Done()
 		}(url)
 	}
-	n.Wait()
+	n4.Wait()
 	fmt.Println(time.Since(start4))
+
+	//start5 := time.Now()
+	//m5 := memo5.New(httpGetBody)
+	//var n5 sync.WaitGroup
+	//for _,url := range incomingURLs() {
+	//	n5.Add(1)
+	//	go func(url string) {
+	//		start := time.Now()
+	//		value, err := m5.Get(url)
+	//		if err != nil {
+	//			log.Print(err)
+	//		}
+	//		fmt.Printf("%s,%s,%d bytes\n",
+	//			url, time.Since(start),len(value.([]byte)))
+	//		n5.Done()
+	//	}(url)
+	//}
+	//n5.Wait()
+	//fmt.Println(time.Since(start5))
 }

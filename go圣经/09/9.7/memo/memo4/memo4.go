@@ -1,6 +1,9 @@
 package memo4
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 type entry struct {
 	res 	result
@@ -39,9 +42,11 @@ func ( memo *Memo) Get(key string ) (value interface{}, err error ) {
 		memo.cache[key] = e
 		memo.mu.Unlock()
 		e.res.value, e.res.err = memo.f(key)
+		fmt.Println("不存在的key")
 		close(e.ready)
 	}else {
 		memo.mu.Unlock()
+		fmt.Println("存在的key")
 		<- e.ready
 	}
 
