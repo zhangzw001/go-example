@@ -1,7 +1,6 @@
 package memo4
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -42,13 +41,12 @@ func ( memo *Memo) Get(key string ) (value interface{}, err error ) {
 		memo.cache[key] = e
 		memo.mu.Unlock()
 		e.res.value, e.res.err = memo.f(key)
-		fmt.Println("不存在的key")
+		//log.Println("没找到...")
 		close(e.ready)
 	}else {
 		memo.mu.Unlock()
-		fmt.Println("存在的key")
 		<- e.ready
+		//log.Println("找到了..."+key)
 	}
-
 	return e.res.value, e.res.err
 }

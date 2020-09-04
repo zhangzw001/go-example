@@ -130,4 +130,7 @@ func main() {
 	//}
 	//n5.Wait()
 	//fmt.Println(time.Since(start5))
+	a := "你"
+	fmt.Println(len(a))
+	fmt.Println(len([]int32(a)))
 }
