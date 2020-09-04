@@ -3,11 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
-	"memo/memo_work"
 	"net/http"
-	"sync"
-	"time"
 )
 
 func incomingURLs() []string  {
@@ -131,27 +127,29 @@ func main() {
 	//n5.Wait()
 	//fmt.Println(time.Since(start5))
 
-	mw := memo_work.New(httpGetBody)
-	var nw sync.WaitGroup
-	mwdown := make(chan struct{})
-	go func() {
-		time.Sleep(300 * time.Millisecond)
-		mwdown <- struct{}{}
-	}()
+	//mw := memo_work.New(httpGetBody)
+	//var nw sync.WaitGroup
+	//mwdown := make(chan struct{})
+	//go func() {
+	//	time.Sleep(300 * time.Millisecond)
+	//	mwdown <- struct{}{}
+	//}()
+	//
+	//for _,url := range incomingURLs() {
+	//	nw.Add(1)
+	//	go func(url string) {
+	//		start := time.Now()
+	//		value, err := mw.Get(url,mwdown)
+	//		if err != nil {
+	//			log.Fatalf("这里是err: %v\n",err )
+	//		}
+	//		fmt.Printf("%s,%s,%d bytes\n",
+	//			url, time.Since(start),len(value.([]byte)))
+	//		nw.Done()
+	//	}(url)
+	//}
+	//nw.Wait()
 
-	for _,url := range incomingURLs() {
-		nw.Add(1)
-		go func(url string) {
-			start := time.Now()
-			value, err := mw.Get(url,mwdown)
-			if err != nil {
-				log.Fatalf("这里是err: %v\n",err )
-			}
-			fmt.Printf("%s,%s,%d bytes\n",
-				url, time.Since(start),len(value.([]byte)))
-			nw.Done()
-		}(url)
-	}
-	nw.Wait()
-
+	fmt.Printf("%u,	%[1]U\n",[]rune("中"))
+	fmt.Printf("%u,	%[1]U\n",[]byte("中"))
 }
