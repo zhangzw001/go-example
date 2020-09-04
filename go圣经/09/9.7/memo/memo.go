@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"memo/memo4"
+	"memo/memo_work"
 	"net/http"
 	"sync"
 	"time"
@@ -92,25 +92,25 @@ func main() {
 	//n.Wait()
 	//fmt.Println(time.Since(start))
 
-	start4 := time.Now()
-	m4 := memo4.New(httpGetBody)
-	var n4 sync.WaitGroup
-	for _,url := range incomingURLs() {
-		n4.Add(1)
-		//m4.Get(url)
-		go func(url string) {
-			start := time.Now()
-			value, err := m4.Get(url)
-			if err != nil {
-				log.Print(err)
-			}
-			fmt.Printf("%s,%s,%d bytes\n",
-				url, time.Since(start),len(value.([]byte)))
-			n4.Done()
-		}(url)
-	}
-	n4.Wait()
-	fmt.Println(time.Since(start4))
+	//start4 := time.Now()
+	//m4 := memo4.New(httpGetBody)
+	//var n4 sync.WaitGroup
+	//for _,url := range incomingURLs() {
+	//	n4.Add(1)
+	//	//m4.Get(url)
+	//	go func(url string) {
+	//		start := time.Now()
+	//		value, err := m4.Get(url)
+	//		if err != nil {
+	//			log.Print(err)
+	//		}
+	//		fmt.Printf("%s,%s,%d bytes\n",
+	//			url, time.Since(start),len(value.([]byte)))
+	//		n4.Done()
+	//	}(url)
+	//}
+	//n4.Wait()
+	//fmt.Println(time.Since(start4))
 
 	//start5 := time.Now()
 	//m5 := memo5.New(httpGetBody)
@@ -130,7 +130,28 @@ func main() {
 	//}
 	//n5.Wait()
 	//fmt.Println(time.Since(start5))
-	a := "你"
-	fmt.Println(len(a))
-	fmt.Println(len([]int32(a)))
+
+	mw := memo_work.New(httpGetBody)
+	var nw sync.WaitGroup
+	mwdown := make(chan struct{})
+	go func() {
+		time.Sleep(300 * time.Millisecond)
+		mwdown <- struct{}{}
+	}()
+
+	for _,url := range incomingURLs() {
+		nw.Add(1)
+		go func(url string) {
+			start := time.Now()
+			value, err := mw.Get(url,mwdown)
+			if err != nil {
+				log.Fatalf("这里是err: %v\n",err )
+			}
+			fmt.Printf("%s,%s,%d bytes\n",
+				url, time.Since(start),len(value.([]byte)))
+			nw.Done()
+		}(url)
+	}
+	nw.Wait()
+
 }
