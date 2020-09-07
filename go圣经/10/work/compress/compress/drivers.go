@@ -48,7 +48,6 @@ func matchDriver(format string ) (driver , error) {
 
 
 // 导出的压缩方法
-
 func Compress(dst,src string ) error {
 	ff := getFileFormat(dst)
 	dri,err := matchDriver(ff)

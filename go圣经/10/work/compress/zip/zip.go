@@ -1,7 +1,7 @@
-package tar
+package zip
 
 import (
-	"archive/tar"
+	"archive/zip"
 	"compress/compress"
 	"errors"
 	"io"
@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-const fext = ".tar"
+const fext = ".zip"
 var (
 	ErrSrcNotExists     = errors.New("source file not exists")
 	ErrDstExists        = errors.New("dest file is exists")
@@ -17,7 +17,7 @@ var (
 	ErrSrcNotSupportDir = errors.New("not support dir yet")
 )
 
-// tar的压缩函数
+// zip的压缩函数
 func Compress(dst,src string) error {
 	// 检查目标文件是否存在
 	_ , err := os.Stat(dst)
@@ -52,7 +52,7 @@ func Compress(dst,src string) error {
 	}
 	defer fdst.Close()
 
-	fdstw := tar.NewWriter(fdst)
+	fdstw := zip.NewWriter(fdst)
 	defer fdstw.Close()
 
 	// 读取源文件内容
@@ -61,16 +61,16 @@ func Compress(dst,src string) error {
 		return err
 	}
 	defer srcFile.Close()
-	// write tar file
-	// NOTE: Must add header, else error: write too long
-	hdr,err := tar.FileInfoHeader(srcinfo,"")
+	// write zip file
+	fileZip, err := fdstw.Create(srcinfo.Name())
 	if err != nil { return err}
-	err = fdstw.WriteHeader(hdr)
-	if err != nil { return err}
+	if srcinfo.IsDir() {
+		return ErrSrcNotSupportDir
+	}
 
-	_, err = io.Copy(fdstw,srcFile)
-	if err != nil { return err}
-
+	_,err = io.Copy(fileZip,srcFile)
+	if err != nil { return err }
+	
 	return nil
 
 }

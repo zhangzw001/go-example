@@ -12,11 +12,13 @@ import (
 //使用类似上面的注册技术来扩展支持不同的压缩格式，然后根据需要通过匿名导入选择导入要支持的压缩格式的驱动包。
 
 func main() {
-
-	f,_ := os.Open("/tmp/a.txt.zip")
+	filename := "/tmp/a.txt.zip"
+	f,_ := os.Open(filename)
 	defer f.Close()
-	fmt.Println(filepath.Ext("/tmp/a.txt.zip"))
-
+	fmt.Println(filepath.Ext(filename))
+	abs,_ := filepath.Abs("a.txt")
+	fmt.Println(abs)
+	fmt.Println(filepath.Dir(filename))
 }
 
 
