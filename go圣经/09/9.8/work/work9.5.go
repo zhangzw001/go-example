@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"time"
+	t "time"
 )
 
 //练习 9.5: 写一个有两个goroutine的程序，两个goroutine会向两个无buffer channel反复地发送ping-pong消息。
@@ -17,7 +17,7 @@ func echo() {
 
 	timeout := make(chan struct{})
 	go func() {
-		time.Sleep(1 * time.Second)
+		t.Sleep(1 * t.Second)
 		timeout <- struct {}{}
 	}()
 	go func() {
