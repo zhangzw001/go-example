@@ -47,7 +47,6 @@ func toImg(in io.Reader , out io.Writer, typeImg string) error {
 		log.Fatal("不支持的转换格式")
 	}
 	return nil
-
 }
 
 
