@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -11,16 +12,16 @@ import (
 )
 
 func main() {
-	f ,err := os.Open("test1.png")
+	f ,err := os.Open("/tmp/test1.png")
 	if err != nil {
-		log.Fatal("文件读取失败")
+		log.Fatal(err)
 	}
 	defer f.Close()
-	fmt.Println(f.Name())
 	if err := toJPEG(f,os.Stdout); err != nil {
 		fmt.Fprintf(os.Stderr,"jpeg: %v\n", err)
 		os.Exit(1)
 	}
+	
 
 }
 
