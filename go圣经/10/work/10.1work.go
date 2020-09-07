@@ -1,10 +1,12 @@
-package work
+package main
 
 import (
 	"flag"
 	"fmt"
 	"image"
+	"image/gif"
 	"image/jpeg"
+	"image/png"
 	"io"
 	"log"
 	"os"
@@ -20,9 +22,8 @@ func main() {
 	}
 	defer f.Close()
 
-	var type string
-	type : = flag.String(type,"jpeg","输入图片格式")
-	if err := toImg(f,os.Stdout); err != nil {
+	var typeImg = flag.String("type","jpeg","输入图片格式")
+	if err := toImg(f,os.Stdout,*typeImg); err != nil {
 		fmt.Fprintf(os.Stderr,"jpeg: %v\n", err)
 		os.Exit(1)
 	}
@@ -31,12 +32,21 @@ func main() {
 }
 
 
-func toImg(in io.Reader , out io.Writer) error {
+func toImg(in io.Reader , out io.Writer, typeImg string) error {
 	img, kind , err := image.Decode(in)
 	if err != nil { return err}
 	fmt.Fprintf(os.Stderr, "Input format=%v\n",kind)
-
-	return jpeg.Encode(out,img,&jpeg.Options{Quality:95})
+	switch typeImg {
+	case "jpeg" :
+		return jpeg.Encode(out,img,&jpeg.Options{Quality:95})
+	case "png" :
+		return png.Encode(out,img)
+	case "gif" :
+		return gif.Encode(out,img,&gif.Options{})
+	default:
+		log.Fatal("不支持的转换格式")
+	}
+	return nil
 
 }
 
