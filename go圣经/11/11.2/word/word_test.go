@@ -108,3 +108,18 @@ func TestRandomPalindromes(t *testing.T) {
 		}
 	}
 }
+
+//练习 11.3: TestRandomPalindromes测试函数只测试了回文字符串。编写新的随机测试生成器，用于测试随机生成的非回文字符串。
+func TestRandomNonPalindromes(t *testing.T) {
+	seed := time.Now().UTC().UnixNano()
+	t.Logf("Random seed: %d",seed)
+	rng := rand.New(rand.NewSource(seed))
+
+	for i := 0 ; i < 10 ; i ++ {
+		p := RandomNonPalindrome(rng)
+		fmt.Printf("%s \t %v\n",p,IsPalindrome2(p))
+		if IsPalindrome(p) {
+			t.Errorf("IsPalindrome(%q) = true",p)
+		}
+	}
+}
