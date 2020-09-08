@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
-	"word/word"
+	"math/rand"
+	"time"
 )
 
 func main() {
-	fmt.Println(word.IsPalindrome2("été"))
+	seed := time.Now().UTC().UnixNano()
+	fmt.Printf("Random seed: %d",seed)
+	r := rand.New(rand.NewSource(seed))
+
 }

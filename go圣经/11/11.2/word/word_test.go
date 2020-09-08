@@ -1,6 +1,11 @@
 package word
 
-import "testing"
+import (
+	"fmt"
+	"math/rand"
+	"testing"
+	"time"
+)
 //
 //func TestIsPalindrome(t *testing.T) {
 //	if !IsPalindrome("datartrated") {
@@ -83,6 +88,23 @@ func TestIsPalindrome2(t *testing.T) {
 		if got := IsPalindrome2(test.input); got != test.want {
 			t.Errorf("IsPalindrome2(%q) = %v", test.input, got)
 			//t.Fatalf("IsPalindrome2(%q) = %v", test.input, got)
+		}
+	}
+}
+
+
+
+
+func TestRandomPalindromes(t *testing.T) {
+	seed := time.Now().UTC().UnixNano()
+	t.Logf("Random seed: %d",seed)
+	rng := rand.New(rand.NewSource(seed))
+
+	for i := 0 ; i < 10 ; i ++ {
+		p := RandomPalindrome(rng)
+		fmt.Printf("%s \t %v\n",p,IsPalindrome2(p))
+		if !IsPalindrome2(p) {
+			t.Errorf("IsPalindrome(%q) = false",p)
 		}
 	}
 }
