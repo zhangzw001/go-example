@@ -1,5 +1,9 @@
 package word
 
+import (
+	"unicode"
+)
+
 func IsPalindrome(s string ) bool {
 	for i := range s {
 		if s[i] != s[len(s)-1-i] {
@@ -14,7 +18,12 @@ func IsPalindrome(s string ) bool {
 
 
 func IsPalindrome2(s string) bool {
-	runes := []rune(s)
+	var runes []rune
+	for _,i := range s {
+		if unicode.IsLetter(i) {
+			runes = append(runes, unicode.ToLower(i))
+		}
+	}
 	for i := range runes {
 		if runes[i] != runes[len(runes)-1-i] {
 			return false

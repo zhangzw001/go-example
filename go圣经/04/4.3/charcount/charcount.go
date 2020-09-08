@@ -1,4 +1,4 @@
-package main
+package charcount
 
 import (
 	"bufio"
@@ -9,11 +9,8 @@ import (
 	"unicode/utf8"
 )
 
-func main() {
-	//charcount()
-	charcount2()
-}
-func charcount(){
+
+func Charcount(){
 	counts := make(map[rune]int)	//// counts of Unicode characters
 	var utflen [utf8.UTFMax + 1]int // count of lengths of UTF-8 encodings
 	invalid := 0                    // count of invalid UTF-8 characters
@@ -57,12 +54,11 @@ func charcount(){
 }
 
 
-func charcount2() {
+func Charcount2(f io.Reader) {
 	counts := make(map[string]map[rune]int )
-	f,err := os.Open(os.Args[1])
-	defer f.Close()
-	if err != nil { fmt.Println(err )}
-
+	//f,err := os.Open(os.Args[1])
+	//defer f.Close()
+	//if err != nil { fmt.Println(err )}
 	buf := bufio.NewScanner(f)
 	for buf.Scan() {
 		buf.Bytes()
