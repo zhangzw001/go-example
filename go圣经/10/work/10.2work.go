@@ -19,6 +19,8 @@ func main() {
 	abs,_ := filepath.Abs("a.txt")
 	fmt.Println(abs)
 	fmt.Println(filepath.Dir(filename))
+
+
 }
 
 
