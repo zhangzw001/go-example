@@ -1,8 +1,6 @@
 package main
 
-import (
-	"word/storageMail"
-)
+import "word/storageMail"
 
 func main() {
 	//seed := time.Now().UTC().UnixNano()
@@ -12,7 +10,7 @@ func main() {
 	//fmt.Println(0x0FFF)
 	//fmt.Println(r.Intn(0x0999-0x1000)+0x999)
 	//fmt.Println(word.IsPalindrome2("été"))
-	storageMail.CheckQuota("zhangzw@boqii.com")
-
+	//storageMail.CheckQuota("zhangzw@boqii.com")
+	storageMail.GomailLearn1()
 
 }
