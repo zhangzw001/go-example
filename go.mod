@@ -3,16 +3,19 @@ module github.com/zhangzw001/go-example
 go 1.13
 
 require (
-	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394 // indirect
-	github.com/garyburd/redigo v1.6.0 // indirect
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
-	github.com/hpcloud/tail v1.0.0 // indirect
-	github.com/tidwall/gjson v1.6.0 // indirect
+	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
+	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/garyburd/redigo v1.6.0
+	github.com/go-sql-driver/mysql v1.5.0
+	github.com/hpcloud/tail v1.0.0
+	github.com/streadway/amqp v1.0.0
+	github.com/stretchr/testify v1.6.1 // indirect
+	github.com/tidwall/gjson v1.6.0
 	golang.org/x/net v0.0.0-20200625001655-4c5254603344
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
-	gopl.io v0.0.0-20200323155855-65c318dde95e // indirect
+	gopl.io v0.0.0-20200323155855-65c318dde95e
 )
 
 replace (
