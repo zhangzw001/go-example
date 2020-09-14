@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"golang.org/x/net/html"
-	"gopl.io/ch5/links"
 	"log"
 	"net/http"
 	"os"

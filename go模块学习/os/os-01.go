@@ -1,12 +1,12 @@
 package main
 
 import (
-"flag"
-"fmt"
-"io"
-"os"
-"runtime"
-"github.com/axgle/mahonia"
+	"flag"
+	"fmt"
+	"github.com/axgle/mahonia"
+	"io"
+	"os"
+	"runtime"
 )
 
 type ReadFile struct {
