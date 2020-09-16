@@ -20,13 +20,13 @@ func Fib(n int ) int {
 
 
 func Fib2(n int) int {
-	var f = [3]int{0, 1, 1}
+	var f = [3]int{1, 1, 2}
 	for i := 2; i <= n; i++ {
 		f[2] = f[0] + f[1]
 		f[0] = f[1]
 		f[1] = f[2]
 	}
-	return f[2]
+	return f[1]
 }
 
 func Fib3() func() int {
