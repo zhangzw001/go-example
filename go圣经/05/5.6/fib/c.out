@@ -1,0 +1,13 @@
+mode: set
+fibtest/5.6fib.go:5.27,7.20 2 0
+fibtest/5.6fib.go:7.20,10.3 2 0
+fibtest/5.6fib.go:14.22,15.11 1 1
+fibtest/5.6fib.go:18.2,18.28 1 1
+fibtest/5.6fib.go:15.11,17.3 1 1
+fibtest/5.6fib.go:22.22,24.26 2 1
+fibtest/5.6fib.go:29.2,29.13 1 1
+fibtest/5.6fib.go:24.26,28.3 3 1
+fibtest/5.6fib.go:32.24,34.20 2 1
+fibtest/5.6fib.go:34.20,35.13 1 1
+fibtest/5.6fib.go:38.3,39.11 2 1
+fibtest/5.6fib.go:35.13,37.4 1 1

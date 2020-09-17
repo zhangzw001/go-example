@@ -1,0 +1,6 @@
+mode: set
+word/echo/echo.go:18.13,21.51 3 0
+word/echo/echo.go:21.51,24.3 2 0
+word/echo/echo.go:28.58,30.13 2 0
+word/echo/echo.go:33.2,33.12 1 0
+word/echo/echo.go:30.13,32.3 1 0
