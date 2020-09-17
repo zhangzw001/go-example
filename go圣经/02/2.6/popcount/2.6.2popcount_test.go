@@ -11,6 +11,10 @@ func assert(t *testing.T,expected,actual interface{}){
 	}
 }
 
+func ExamplePopCount() {
+	PopCount(0x1234567890ABCDEF)
+}
+
 func TestPopCount(t *testing.T) {
 	assert(t,32, PopCount(0x1234567890ABCDEF))
 }
