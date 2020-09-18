@@ -115,5 +115,5 @@ func main() {
 
 	//Display("strangelove",strangelove)
 	Display("os.Stderr", os.Stderr)
-	
+	fmt.Println(reflect.Map)
 }
