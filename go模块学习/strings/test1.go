@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 type User struct {
@@ -21,5 +22,10 @@ func main() {
 	fmt.Sprintln(a)
 	//fmt.Println(fmt.Sprintln(a))
 	fmt.Println(reflect.TypeOf(fmt.Sprintln(a)))
+	var str strings.Builder
+	for i := 0 ; i < 1000; i ++ {
+		str.WriteString("a")
+	}
+	fmt.Println(str.String(),str)
 }
 
