@@ -26,6 +26,13 @@ func main() {
 	for i := 0 ; i < 1000; i ++ {
 		str.WriteString("a")
 	}
-	fmt.Println(str.String(),str)
+	//fmt.Println(str.String(),str)
+
+
+	//const s = "Go101.org"
+	var s = "Go101.org中文"
+	fmt.Println(1 << len(s[:]))
+	fmt.Println(reflect.TypeOf(len(s)))
+	fmt.Println()
 }
 
