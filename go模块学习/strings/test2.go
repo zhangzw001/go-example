@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"runtime"
 )
 
 const s = "Go101.org"
@@ -21,4 +22,17 @@ func main() {
 	fmt.Println(reflect.TypeOf(b1),b1 )
 	//fmt.Println(reflect.TypeOf(a1),a1 )
 	println(a, b)
+
+	arr := []int{1,2,3}
+	narr := []*int{}
+	for i,_ := range arr {
+		narr = append(narr,&arr[i])
+	}
+	//for _, v := range arr {
+	//	narr = append(narr,&v)
+	//}
+	runtime.m
+	for _, v := range narr {
+		fmt.Println(*v)
+	}
 }
