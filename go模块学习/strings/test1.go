@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"unicode/utf8"
 )
 
 type User struct {
@@ -31,8 +32,8 @@ func main() {
 
 	//const s = "Go101.org"
 	var s = "Go101.org中文"
-	fmt.Println(1 << len(s[:]))
-	fmt.Println(reflect.TypeOf(len(s)))
-	fmt.Println()
+	//fmt.Println(1 << len(s[:]))
+	//fmt.Println(reflect.TypeOf(len(s)))
+	fmt.Println(utf8.RuneCountInString(s))
 }
 
