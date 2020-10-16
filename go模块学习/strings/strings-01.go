@@ -10,6 +10,8 @@ import (
 func main() {
 
 	s := "   abcd222xxx dfadf hello world! good bye !   "
+	fmt.Println(strings.Title(s))
+
 	// 1 Contains 字符串是否包含 指定字符串
 	// func Contains(s string, substr string) bool
 	fmt.Println(strings.Contains(s, "hello"))
