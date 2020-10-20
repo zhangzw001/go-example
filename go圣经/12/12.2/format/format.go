@@ -1,11 +1,13 @@
 package format
 
 import (
+	"fmt"
 	"reflect"
 	"strconv"
 )
 
 func Any(value interface{}) string {
+	fmt.Println(reflect.ValueOf(value))
 	return formatAtom(reflect.ValueOf(value))
 }
 
