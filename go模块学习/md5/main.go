@@ -21,6 +21,5 @@ func MD5(s string) (string ,error) {
 	if err != nil {
 		return "", err
 	}
-	//secret.Sum([]byte(s))
 	return hex.EncodeToString(secret.Sum(nil)),nil
 }
